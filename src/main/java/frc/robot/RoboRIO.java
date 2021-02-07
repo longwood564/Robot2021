@@ -47,6 +47,21 @@ public final class RoboRIO {
   /** The port of the backward channel of the launcher cannon double solenoid. */
   public static final int kPortDoubleSolenoidBackwardLauncherCannon = 5;
 
+  // Digital Inputs
+
+  /** The port of the limit switch sensor of the winch. */
+  public static final int kPortLimitSwitchSensorWinch = 0;
+  /**
+   * The port of the photoelectric sensor at the bottom of the storage, where balls enter. This is a
+   * 42EF-D1MNAK-A2.
+   */
+  public static final int kPortPhotoelectricSensorEnter = 1;
+  /**
+   * The port of the photoelectric sensor at the top of the storage, where balls leave. This is a
+   * 42JT-F5LET1-A2.
+   */
+  public static final int kPortPhotoelectricSensorExit = 2;
+
   // Analog Inputs
 
   /** The port of the ultrasonic sensor. */
@@ -78,19 +93,4 @@ public final class RoboRIO {
    */
   public static final double kUltrasonicRange =
       kMaximumReadingUltrasonic - kMinimumReadingUltrasonic;
-
-  // Digital Inputs
-
-  /** The port of the limit switch sensor of the winch. */
-  public static final int kPortLimitSwitchSensorWinch = 0;
-  /**
-   * The port of the photoelectric sensor at the bottom of the storage, where balls enter. This is a
-   * 42EF-D1MNAK-A2.
-   */
-  public static final int kPortPhotoelectricSensorEnter = 1;
-  /**
-   * The port of the photoelectric sensor at the top of the storage, where balls leave. This is a
-   * 42JT-F5LET1-A2.
-   */
-  public static final int kPortPhotoelectricSensorExit = 2;
 }
