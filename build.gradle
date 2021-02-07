@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2021.2.2"
+    id "com.diffplug.spotless" version "5.9.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -76,4 +77,61 @@ sim {
 jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+}
+
+// Spotless configuration. See: https://github.com/diffplug/spotless/tree/main/plugin-gradle.
+// This is based off of the WPILib configuration from:
+// https://github.com/wpilibsuite/allwpilib/blob/v2021.2.2/build.gradle.
+spotless {
+    java {
+        target fileTree('.') {
+            include '**/*.java'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        importOrder('java', 'javax', 'edu.wpi', 'org.opencv', 'com.ctre', 'com.revrobotics')
+        toggleOffOn()
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+        // The file begins at the "package" statement, or at the WPILib copyright comment.
+        licenseHeader '// Copyright (c) Team 564.\n\
+// Open Source Software; you can modify and/or share it under the terms of\n\
+// the BSD license file in the root directory of this project.',
+                '(package|\\n// Copyright \\(c\\) FIRST and other WPILib contributors.)'
+    }
+    groovyGradle {
+        target fileTree('.') {
+            include '**/*.gradle'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        greclipse()
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format 'json', {
+        target fileTree('.') {
+            include '**/*.json'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        eclipseWtp('json')
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+    format 'misc', {
+        target fileTree('.') {
+            include '**/*.md', '**/.gitignore'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+    format 'misc', {
+        target 'License.md'
+        ratchetFrom 'origin/main'
+        licenseHeader 'Copyright (c) $YEAR, Team 564', 'All rights reserved.'
+    }
 }
