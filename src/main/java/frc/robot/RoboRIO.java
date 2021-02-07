@@ -47,7 +47,7 @@ public final class RoboRIO {
   /** The port of the backward channel of the launcher cannon double solenoid. */
   public static final int kPortDoubleSolenoidBackwardLauncherCannon = 5;
 
-  // Digital Inputs
+  // DIO Devices
 
   /** The port of the limit switch sensor of the winch. */
   // public static final int kPortLimitSwitchSensorWinch = -1;
