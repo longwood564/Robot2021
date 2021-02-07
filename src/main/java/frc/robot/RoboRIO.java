@@ -50,17 +50,17 @@ public final class RoboRIO {
   // Digital Inputs
 
   /** The port of the limit switch sensor of the winch. */
-  public static final int kPortLimitSwitchSensorWinch = 0;
+  // public static final int kPortLimitSwitchSensorWinch = -1;
   /**
    * The port of the photoelectric sensor at the bottom of the storage, where balls enter. This is a
    * 42EF-D1MNAK-A2.
    */
-  public static final int kPortPhotoelectricSensorEnter = 1;
+  // public static final int kPortPhotoelectricSensorEnter = -1;
   /**
    * The port of the photoelectric sensor at the top of the storage, where balls leave. This is a
    * 42JT-F5LET1-A2.
    */
-  public static final int kPortPhotoelectricSensorExit = 2;
+  // public static final int kPortPhotoelectricSensorExit = -1;
 
   // Analog Inputs
 
