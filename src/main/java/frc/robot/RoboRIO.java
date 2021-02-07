@@ -16,8 +16,6 @@ public final class RoboRIO {
   public static final int kPortMotorDriveFrontRight = 3;
   /** The port of the back right drive motor. */
   public static final int kPortMotorDriveBackRight = 4;
-  /** The port of the control panel motor. */
-  public static final int kPortMotorControlPanel = 6;
   /** The port of the intake motor. */
   public static final int kPortMotorIntake = 7;
   /** The port of the left launcher motor. */
@@ -29,19 +27,9 @@ public final class RoboRIO {
    * be replicated due to software limitaitons.
    */
   public static final int kPortMotorLauncherRight = 11;
-  /** The port of the winch motor. */
-  public static final int kPortMotorWinch = 12;
 
   // PCM Devices
 
-  /** The port of the forward channel of the control panel double solenoid. */
-  public static final int kPortDoubleSolenoidForwardControlPanel = 0;
-  /** The port of the backward channel of the control panel double solenoid. */
-  public static final int kPortDoubleSolenoidBackwardControlPanel = 1;
-  /** The port of the forward channel of the winch double solenoid. */
-  public static final int kPortDoubleSolenoidForwardWinch = 3;
-  /** The port of the backward channel of the winch double solenoid. */
-  public static final int kPortDoubleSolenoidBackwardWinch = 4;
   /** The port of the forward channel of the launcher cannon double solenoid. */
   public static final int kPortDoubleSolenoidForwardLauncherCannon = 6;
   /** The port of the backward channel of the launcher cannon double solenoid. */
