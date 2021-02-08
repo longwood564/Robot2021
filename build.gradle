@@ -99,7 +99,7 @@ spotless {
 // Open Source Software; you can modify and/or share it under the terms of\n\
 // the BSD license file in the root directory of this project.\n\n',
                 '(package|\
-// Copyright \\(c\\) FIRST and other WPILib contributors.|\
+// Copyright \\(c\\) FIRST and other WPILib contributors\\.|\
 // Copyright \\(c\\) [0-9]{4}, Oscar Robotics.+)'
     }
     groovyGradle {
