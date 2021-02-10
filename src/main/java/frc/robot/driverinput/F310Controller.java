@@ -112,6 +112,11 @@ public class F310Controller extends GenericHID {
   public final JoystickButton buttonLs = new JoystickButton(this, Button.kLs.value);
   public final JoystickButton buttonRs = new JoystickButton(this, Button.kRs.value);
 
+  // Joystick Axes
+
+  public final JoystickAxis axisLt = new JoystickAxis(this, Axis.kLt.value);
+  public final JoystickAxis axisRt = new JoystickAxis(this, Axis.kRt.value);
+
   // Joystick POVs
 
   public final POVButton povUp = new POVButton(this, 0);
