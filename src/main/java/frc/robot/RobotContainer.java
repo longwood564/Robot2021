@@ -67,7 +67,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Command setSpeedNormal =
+    Command setSpeedNormalCommand =
         new InstantCommand(
                 () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedNormal),
                 m_drivetrainSubsystem)
@@ -79,7 +79,7 @@ public class RobotContainer {
                     () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedSlow),
                     m_drivetrainSubsystem)
                 .withName("Set Slow Speed"))
-        .whenReleased(setSpeedNormal);
+        .whenReleased(setSpeedNormalCommand);
     m_controllerDrive
         .axisRt
         .whenPressed(
@@ -87,7 +87,7 @@ public class RobotContainer {
                     () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedFast),
                     m_drivetrainSubsystem)
                 .withName("Set Fast Speed"))
-        .whenReleased(setSpeedNormal);
+        .whenReleased(setSpeedNormalCommand);
   }
 
   /**
