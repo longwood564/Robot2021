@@ -47,6 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  * include:
  *
  * <ul>
+ *   <li><b>The Y-axis is inverted such that +Y is up.</b>
  *   <li>Trigger member variables have been added, to facilitate command based programming.
  *       <ul>
  *         <li>Public JoystickButton member variables have been added for each button.
@@ -145,14 +146,16 @@ public class F310Controller extends GenericHID {
   }
 
   /**
-   * Get the Y axis value of the controller.
+   * Get the Y axis value of the controller. This is negated such that +Y is up.
    *
    * @param hand Side of controller whose value should be returned.
    * @return The Y axis value of the controller.
    */
   @Override
   public double getY(Hand hand) {
-    return hand.equals(Hand.kLeft) ? getRawAxis(Axis.kLeftY.value) : getRawAxis(Axis.kRightY.value);
+    return -(hand.equals(Hand.kLeft)
+        ? getRawAxis(Axis.kLeftY.value)
+        : getRawAxis(Axis.kRightY.value));
   }
 
   /**
