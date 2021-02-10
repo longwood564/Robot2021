@@ -157,8 +157,6 @@ public class F310Controller extends GenericHID {
    * @return The trigger axis value of the controller.
    */
   public double getTriggerAxis(Hand hand) {
-    return hand.equals(Hand.kLeft)
-        ? getRawAxis(Axis.kLt.value)
-        : getRawAxis(Axis.kRt.value);
+    return hand.equals(Hand.kLeft) ? getRawAxis(Axis.kLt.value) : getRawAxis(Axis.kRt.value);
   }
 }
