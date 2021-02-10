@@ -49,6 +49,13 @@ public final class Constants {
     }
   }
 
+  public static final class DriverStationConstants {
+    /** The port of the driver controller. */
+    public static final int kPortControllerDrive = 0;
+    /** The port of the manipulator controller. */
+    public static final int kPortControllerManip = 1;
+  }
+
   public static final class DrivetrainConstants {
     // TODO: Check these speeds - especially kSpeedFast.
     /** The slow speed to drive at. */

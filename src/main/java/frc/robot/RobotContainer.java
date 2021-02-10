@@ -11,8 +11,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.DriverStationConstants;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.driverinput.F310Controller;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -22,19 +26,35 @@ import frc.robot.subsystems.ExampleSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // Subsystems
+
+  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+  // Commands
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  // Driver Input
+
   private final F310Controller m_controllerDrive =
-      new F310Controller(DriveStation.kPortControllerDrive);
+      new F310Controller(DriverStationConstants.kPortControllerDrive);
   private final F310Controller m_controllerManip =
-      new F310Controller(DriveStation.kPortControllerManip);
+      new F310Controller(DriverStationConstants.kPortControllerManip);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
+    // Configure default commands.
+
+    m_drivetrainSubsystem.setDefaultCommand(
+        new RunCommand(
+            () ->
+                m_drivetrainSubsystem.arcadeDrive(
+                    m_controllerDrive.getY(GenericHID.Hand.kLeft),
+                    m_controllerDrive.getX(GenericHID.Hand.kRight)),
+            m_drivetrainSubsystem));
+
+    // Configure button to command bindings.
     configureButtonBindings();
   }
 
@@ -44,7 +64,22 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    Runnable setSpeedNormal =
+        () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedNormal);
+    m_controllerDrive
+        .axisLt
+        .whenPressed(
+            () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedSlow),
+            m_drivetrainSubsystem)
+        .whenReleased(setSpeedNormal);
+    m_controllerDrive
+        .axisRt
+        .whenPressed(
+            () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedFast),
+            m_drivetrainSubsystem)
+        .whenReleased(setSpeedNormal);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
