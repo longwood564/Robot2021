@@ -72,13 +72,13 @@ public class RobotContainer {
         .whenPressed(
             () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedSlow),
             m_drivetrainSubsystem)
-        .whenReleased(setSpeedNormal);
+        .whenReleased(setSpeedNormal, m_drivetrainSubsystem);
     m_controllerDrive
         .axisRt
         .whenPressed(
             () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedFast),
             m_drivetrainSubsystem)
-        .whenReleased(setSpeedNormal);
+        .whenReleased(setSpeedNormal, m_drivetrainSubsystem);
   }
 
   /**
