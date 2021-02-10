@@ -87,8 +87,8 @@ public class F310Controller extends GenericHID {
   public enum Axis {
     kLeftX(0),
     kLeftY(1),
-    kLeftTrigger(2),
-    kRightTrigger(3),
+    kLt(2),
+    kRt(3),
     kRightX(4),
     kRightY(5);
 
@@ -148,5 +148,17 @@ public class F310Controller extends GenericHID {
   @Override
   public double getY(Hand hand) {
     return hand.equals(Hand.kLeft) ? getRawAxis(Axis.kLeftY.value) : getRawAxis(Axis.kRightY.value);
+  }
+
+  /**
+   * Get the trigger axis value of the controller.
+   *
+   * @param hand Side of controller whose value should be returned.
+   * @return The trigger axis value of the controller.
+   */
+  public double getTriggerAxis(Hand hand) {
+    return hand.equals(Hand.kLeft)
+        ? getRawAxis(Axis.kLt.value)
+        : getRawAxis(Axis.kRt.value);
   }
 }
