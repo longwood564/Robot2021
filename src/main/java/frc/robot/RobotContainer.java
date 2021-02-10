@@ -11,6 +11,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.DriverStationConstants;
 import frc.robot.Constants.DrivetrainConstants;
@@ -48,11 +49,12 @@ public class RobotContainer {
 
     m_drivetrainSubsystem.setDefaultCommand(
         new RunCommand(
-            () ->
-                m_drivetrainSubsystem.arcadeDrive(
-                    m_controllerDrive.getY(GenericHID.Hand.kLeft),
-                    m_controllerDrive.getX(GenericHID.Hand.kRight)),
-            m_drivetrainSubsystem));
+                () ->
+                    m_drivetrainSubsystem.arcadeDrive(
+                        m_controllerDrive.getY(GenericHID.Hand.kLeft),
+                        m_controllerDrive.getX(GenericHID.Hand.kRight)),
+                m_drivetrainSubsystem)
+            .withName("Arcade Drive"));
 
     // Configure button to command bindings.
     configureButtonBindings();
@@ -65,20 +67,27 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Runnable setSpeedNormal =
-        () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedNormal);
+    Command setSpeedNormal =
+        new InstantCommand(
+                () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedNormal),
+                m_drivetrainSubsystem)
+            .withName("Set Normal Speed");
     m_controllerDrive
         .axisLt
         .whenPressed(
-            () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedSlow),
-            m_drivetrainSubsystem)
-        .whenReleased(setSpeedNormal, m_drivetrainSubsystem);
+            new InstantCommand(
+                    () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedSlow),
+                    m_drivetrainSubsystem)
+                .withName("Set Slow Speed"))
+        .whenReleased(setSpeedNormal);
     m_controllerDrive
         .axisRt
         .whenPressed(
-            () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedFast),
-            m_drivetrainSubsystem)
-        .whenReleased(setSpeedNormal, m_drivetrainSubsystem);
+            new InstantCommand(
+                    () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedFast),
+                    m_drivetrainSubsystem)
+                .withName("Set Fast Speed"))
+        .whenReleased(setSpeedNormal);
   }
 
   /**
