@@ -32,6 +32,7 @@ public class RobotContainer {
   // Subsystems
 
   @Log private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  @Log private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   @Log private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Commands
