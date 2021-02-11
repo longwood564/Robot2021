@@ -1,6 +1,5 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.server.launchMode": "Standard",
+  "editor.tabSize": 2,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -14,5 +13,8 @@
     "**/.factorypath": true,
     "**/*~": true
   },
-  "java.format.enabled": false
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.format.enabled": false,
+  "java.saveActions.organizeImports": false,
+  "java.server.launchMode": "Standard"
 }
