@@ -4,6 +4,10 @@ plugins {
     id "com.diffplug.spotless" version "5.9.0"
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -62,6 +66,9 @@ dependencies {
     // Websocket extensions require additional configuration.
     // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)
     // simulation wpi.deps.sim.ws_client(wpi.platforms.desktop, false)
+
+    // Depend on Oblog.
+    implementation "com.github.Oblarg.Oblog:lib:3.1.2"
 }
 
 // Simulation configuration (e.g. environment variables).
