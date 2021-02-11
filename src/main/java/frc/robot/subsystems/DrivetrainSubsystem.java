@@ -40,6 +40,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
           RoboRIO.DIO.kPortsEncoderDriveLeft[0],
           RoboRIO.DIO.kPortsEncoderDriveLeft[1],
           RoboRIO.DIO.kPortsEncoderDriveLeft[2]);
+
   @Log(name = "Right Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 5)
   // This encoder must be reversed so that values will be consistent with the left drive encoder.
   private final Encoder m_encoderRelativeRight =
