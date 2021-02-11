@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+
+import io.github.oblarg.oblog.annotations.Log;
+
 import frc.robot.Constants.DriverStationConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.ExampleCommand;
@@ -20,7 +23,6 @@ import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import io.github.oblarg.oblog.annotations.Log;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
