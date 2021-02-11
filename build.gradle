@@ -94,10 +94,10 @@ spotless {
             include '**/*.java'
             exclude '**/build/**', '**/build-*/**'
         }
+        googleJavaFormat()
         importOrder('java', 'javax', 'edu.wpi', 'org.opencv', 'io.github.oblarg', 'com.ctre',
                 'com.revrobotics', 'frc', '')
         toggleOffOn()
-        googleJavaFormat()
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
