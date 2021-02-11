@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RoboRIO;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 /**
  * Represents the drivetrain subsystem.
@@ -18,7 +20,7 @@ import frc.robot.Constants.RoboRIO;
  * <p>The drivetrain encapsulates the wheels the robot moves around with, the motors that power
  * them, and the encoders that measure their movement.
  */
-public class DrivetrainSubsystem extends SubsystemBase {
+public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   // Motor Controllers
 
   private final WPI_TalonSRX m_motorFrontLeft =
@@ -32,12 +34,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   // Quadrature Encoders (Measures relative distance)
 
+  @Log(name = "Left Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 3)
   private final Encoder m_encoderRelativeLeft =
       new Encoder(
           RoboRIO.DIO.kPortsEncoderDriveLeft[0],
           RoboRIO.DIO.kPortsEncoderDriveLeft[1],
           RoboRIO.DIO.kPortsEncoderDriveLeft[2]);
   // This encoder must be reversed so that values will be consistent with the left drive encoder.
+  @Log(name = "Right Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 5)
   private final Encoder m_encoderRelativeRight =
       new Encoder(
           RoboRIO.DIO.kPortsEncoderDriveRight[0],
@@ -47,12 +51,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   // Duty Cycle Encoders (Measures absolute distance)
 
+  @Log(name = "Left Encoder (Absolute)", width = 2, height = 2, rowIndex = 1, columnIndex = 3)
   private final DutyCycleEncoder m_encoderAbsoluteLeft =
       new DutyCycleEncoder(RoboRIO.DIO.kPortsEncoderDriveLeft[3]);
+
+  @Log(name = "Right Encoder (Absolute)", width = 2, height = 2, rowIndex = 1, columnIndex = 5)
   private final DutyCycleEncoder m_encoderAbsoluteRight =
       new DutyCycleEncoder(RoboRIO.DIO.kPortsEncoderDriveRight[3]);
 
   // Drive Class
+  @Log(name = "Drive", width = 2, height = 3, rowIndex = 0, columnIndex = 0)
+  @Log(
+      name = "Drive",
+      width = 2,
+      height = 3,
+      rowIndex = 0,
+      columnIndex = 7,
+      tabName = "Driver View")
   private final DifferentialDrive m_differentialDrive =
       new DifferentialDrive(m_motorFrontLeft, m_motorFrontRight);
 

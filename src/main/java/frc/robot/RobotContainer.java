@@ -19,6 +19,8 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+import io.github.oblarg.oblog.annotations.Log;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,8 +31,8 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer {
   // Subsystems
 
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  @Log private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  @Log private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Commands
 
