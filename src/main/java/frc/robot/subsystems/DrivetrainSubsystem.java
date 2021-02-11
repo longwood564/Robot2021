@@ -40,8 +40,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
           RoboRIO.DIO.kPortsEncoderDriveLeft[0],
           RoboRIO.DIO.kPortsEncoderDriveLeft[1],
           RoboRIO.DIO.kPortsEncoderDriveLeft[2]);
-  // This encoder must be reversed so that values will be consistent with the left drive encoder.
   @Log(name = "Right Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 5)
+  // This encoder must be reversed so that values will be consistent with the left drive encoder.
   private final Encoder m_encoderRelativeRight =
       new Encoder(
           RoboRIO.DIO.kPortsEncoderDriveRight[0],
@@ -59,7 +59,6 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   private final DutyCycleEncoder m_encoderAbsoluteRight =
       new DutyCycleEncoder(RoboRIO.DIO.kPortsEncoderDriveRight[3]);
 
-  // Drive Class
   @Log(name = "Drive", width = 2, height = 3, rowIndex = 0, columnIndex = 0)
   @Log(
       name = "Drive",
@@ -68,6 +67,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
       rowIndex = 0,
       columnIndex = 7,
       tabName = "Driver View")
+  // Drive Class
   private final DifferentialDrive m_differentialDrive =
       new DifferentialDrive(m_motorFrontLeft, m_motorFrontRight);
 

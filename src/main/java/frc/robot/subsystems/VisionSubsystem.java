@@ -17,7 +17,6 @@ import io.github.oblarg.oblog.annotations.Log;
  * with coprocessors to provide object tracking data from the other camera.
  */
 public class VisionSubsystem extends SubsystemBase implements Loggable {
-  // USB Camera Class
   @Log.CameraStream(name = "Camera", width = 7, height = 6, rowIndex = 0, columnIndex = 0)
   @Log.CameraStream(
       name = "Camera",
@@ -26,6 +25,7 @@ public class VisionSubsystem extends SubsystemBase implements Loggable {
       rowIndex = 0,
       columnIndex = 0,
       tabName = "Driver View")
+  // USB Camera Class
   UsbCamera m_camera = CameraServer.getInstance().startAutomaticCapture();
 
   /** Initializes the vision subsystem. */
