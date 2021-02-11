@@ -6,9 +6,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RoboRIO;
 import io.github.oblarg.oblog.Loggable;
@@ -18,7 +21,8 @@ import io.github.oblarg.oblog.annotations.Log;
  * Represents the drivetrain subsystem.
  *
  * <p>The drivetrain encapsulates the wheels the robot moves around with, the motors that power
- * them, and the encoders that measure their movement.
+ * them, and the encoders that measure their movement. This subsystem also encapsulates the
+ * gyrometer, because it is tightly integrated with the robot driving.
  */
 public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   // Motor Controllers
@@ -59,6 +63,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   @Log(name = "Right Encoder (Absolute)", width = 2, height = 2, rowIndex = 1, columnIndex = 5)
   private final DutyCycleEncoder m_encoderAbsoluteRight =
       new DutyCycleEncoder(RoboRIO.DIO.kPortsEncoderDriveRight[3]);
+
+  // Gyroscope
+  @Log(name = "Gyroscope", width = 2, height = 2, rowIndex = 0, columnIndex = 7)
+  Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 
   @Log(name = "Drive", width = 2, height = 3, rowIndex = 0, columnIndex = 0)
   @Log(
