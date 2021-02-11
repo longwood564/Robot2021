@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import io.github.oblarg.oblog.annotations.Log;
 
-import frc.robot.Constants.DriverStationConstants;
+import frc.robot.Constants.DriverStation;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.driverinput.F310Controller;
@@ -44,9 +44,9 @@ public class RobotContainer {
   // Driver Input
 
   private final F310Controller m_controllerDrive =
-      new F310Controller(DriverStationConstants.kPortControllerDrive);
+      new F310Controller(DriverStation.kPortControllerDrive);
   private final F310Controller m_controllerManip =
-      new F310Controller(DriverStationConstants.kPortControllerManip);
+      new F310Controller(DriverStation.kPortControllerManip);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

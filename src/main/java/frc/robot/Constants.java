@@ -18,7 +18,14 @@ package frc.robot;
  */
 // TODO: Move everything inside here.
 public final class Constants {
+  /**
+   * Constants for ports that are on the roboRIO.
+   *
+   * <p>The SPI port to which the Gyroscope is connected is not included here because that constant
+   * is provided by WPILib.
+   */
   public static final class RoboRIO {
+    /** Constants for the Control Area Network/CAN bus. */
     public static final class CAN {
       /** The port of the front left drive motor. */
       public static final int kPortMotorDriveFrontLeft = 1;
@@ -28,6 +35,8 @@ public final class Constants {
       public static final int kPortMotorDriveFrontRight = 3;
       /** The port of the back right drive motor. */
       public static final int kPortMotorDriveBackRight = 4;
+      /** The ports of the launcher cannon double solenoid. */
+      public static final int[] kPortsDoubleSolenoidLauncherCannon = {5, 6};
       /** The port of the intake motor. */
       public static final int kPortMotorIntake = 7;
       /** The port of the left launcher motor. */
@@ -41,21 +50,34 @@ public final class Constants {
       public static final int kPortMotorLauncherRight = 11;
     }
 
+    /** Constants for the Digital Input/Output ports. */
     public static final class DIO {
       /** The ports of the left drive encoder. */
       public static final int[] kPortsEncoderDriveLeft = {0, 1, 2, 3};
       /** The ports of the right drive encoder. */
       public static final int[] kPortsEncoderDriveRight = {4, 5, 6, 7};
+      /** The port of the photoelectric sensor at the bottom of the storage, where balls enter. */
+      public static final int kPortPhotoelectricSensorEnter = 8;
+      /** The port of the photoelectric sensor at the top of the storage, where balls leave. */
+      public static final int kPortPhotoelectricSensorExit = 9;
+    }
+
+    /** Constants for the Analog Input ports. */
+    public static final class AI {
+      /** The port of the ultrasonic sensor. */
+      public static final int kPortUltrasonicSensorPort = 0;
     }
   }
 
-  public static final class DriverStationConstants {
+  /** Constants for ports that are on the driver station. */
+  public static final class DriverStation {
     /** The port of the driver controller. */
     public static final int kPortControllerDrive = 0;
     /** The port of the manipulator controller. */
     public static final int kPortControllerManip = 1;
   }
 
+  /** Constants for the Drivetrain subsystem. */
   public static final class DrivetrainConstants {
     // TODO: Check these speeds - especially kSpeedFast.
     /** The slow speed to drive at. */
