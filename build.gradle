@@ -95,7 +95,7 @@ spotless {
             exclude '**/build/**', '**/build-*/**'
         }
         importOrder('java', 'javax', 'edu.wpi', 'org.opencv', 'io.github.oblarg', 'com.ctre',
-                'com.revrobotics', 'frc')
+                'com.revrobotics', 'frc', '')
         toggleOffOn()
         googleJavaFormat()
         removeUnusedImports()
