@@ -29,6 +29,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // Disable LiveWindow telemetry. LiveWindow serves two main purposes:
+    //  - Monitoring actuator/sensor values. If you look in the constructors of most WPILib
+    //    libraries, you'll see that they automatically register themselves in the LiveWindow
+    //    system - how convenient!
+    //  - While the robot is in test mode, the LiveWindow widgets allow you to set values of the
+    //    hardware from the dashboard (e.g. SmartDashboard, Shuffleboard, Glass).
+    // By disabling telemetry, the functionality in the first bullet is no longer active in every
+    // mode. When test mode is enabled, this configuration is overriden, the functionality in both
+    // bullets is activated.
+    LiveWindow.disableAllTelemetry();
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
