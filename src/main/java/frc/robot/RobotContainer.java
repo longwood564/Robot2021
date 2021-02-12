@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import io.github.oblarg.oblog.annotations.Log;
@@ -20,10 +21,8 @@ import frc.robot.Constants.DriverStation;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -41,11 +40,8 @@ public class RobotContainer {
   @Log private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   @Log private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   @Log private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
-  @Log private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Commands
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   // Driver Input
 
@@ -139,7 +135,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new PrintCommand("Autonomous is not implemented yet!");
   }
 }
