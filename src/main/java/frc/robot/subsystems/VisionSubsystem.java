@@ -18,6 +18,7 @@ import io.github.oblarg.oblog.annotations.Log;
  * with coprocessors to provide object tracking data from the other camera.
  */
 public class VisionSubsystem extends SubsystemBase implements Loggable {
+  // TODO: Check whether adding this twice consumes twice the bandwidth.
   @Log.CameraStream(name = "Camera", width = 7, height = 6, rowIndex = 0, columnIndex = 0)
   @Log.CameraStream(
       name = "Camera",

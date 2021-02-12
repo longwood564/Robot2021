@@ -16,7 +16,6 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-// TODO: Move everything inside here.
 public final class Constants {
   /**
    * Constants for ports that are on the roboRIO.
