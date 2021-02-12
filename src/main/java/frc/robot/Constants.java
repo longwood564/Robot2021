@@ -77,7 +77,7 @@ public final class Constants {
     public static final int kPortControllerManip = 1;
   }
 
-  /** Constants for the Drivetrain subsystem. */
+  /** Constants for the drivetrain subsystem. */
   public static final class DrivetrainConstants {
     // TODO: Check these speeds - especially kSpeedFast.
     /** The slow speed to drive at. */
@@ -88,7 +88,7 @@ public final class Constants {
     public static final double kSpeedFast = 1.0;
   }
 
-  /** Constants for the Intake subsystem. */
+  /** Constants for the intake subsystem. */
   public static final class IntakeConstants {
     /** The speed to intake balls at. */
     public static final double kSpeedIntake = 0.5;
