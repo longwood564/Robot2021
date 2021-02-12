@@ -17,20 +17,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import io.github.oblarg.oblog.Logger;
 
-/**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
- * project.
- */
+/** Initializes the robot, and handles mode changes. */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
 
   /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
+   * This method is run when the robot is first started up, regardless of whether real or simulated.
    */
   @Override
   public void robotInit() {
@@ -62,44 +56,38 @@ public class Robot extends TimedRobot {
     Logger.configureLoggingAndConfig(m_robotContainer, false);
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * SmartDashboard integrated updating.
-   */
+  /** This method is run periodically in any mode. */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // Run the Scheduler. This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
-    // block in order for anything in the Command-based framework to work.
+    // and running subsystem periodic() methods.
     CommandScheduler.getInstance().run();
 
     // Update the logger.
     Logger.updateEntries();
   }
 
-  /** This function is run when the simulation is first started up, in addition to robotInit(). */
+  /** This method is run when the robot is first started up, when being simulated. */
   @Override
   public void simulationInit() {}
 
-  /** This function is called periodically during the simulation. */
+  /** This method is run periodically in any mode, when being simulated. */
   @Override
   public void simulationPeriodic() {}
 
-  /** This function is called once each time the robot enters Disabled mode. */
+  /** This method is run when the robot enters disabled mode. */
   @Override
   public void disabledInit() {
     // Disable joystick connection warnings.
     DriverStation.getInstance().silenceJoystickConnectionWarning(true);
   }
 
+  /** This method is run periodically in disabled mode. */
   @Override
   public void disabledPeriodic() {}
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /** This method is run when the robot enters autonomous mode. */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -110,10 +98,11 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /** This function is called periodically during autonomous. */
+  /** This method is run periodically in autonomous mode. */
   @Override
   public void autonomousPeriodic() {}
 
+  /** This method is run when the robot enters teleoperated mode. */
   @Override
   public void teleopInit() {
     // Enable joystick connection warnings.
@@ -128,17 +117,18 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /** This function is called periodically during operator control. */
+  /** This method is run periodically in teleoperated mode. */
   @Override
   public void teleopPeriodic() {}
 
+  /** This method is run when the robot enters test mode. */
   @Override
   public void testInit() {
-    // Cancels all running commands at the start of test mode.
+    // Cancel all running commands.
     CommandScheduler.getInstance().cancelAll();
   }
 
-  /** This function is called periodically during test mode. */
+  /** This method is run periodically in test mode. */
   @Override
   public void testPeriodic() {}
 }

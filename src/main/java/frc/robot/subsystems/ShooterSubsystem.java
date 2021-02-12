@@ -14,6 +14,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.Constants.RoboRIO;
 
+/**
+ * Represents the shooter subsystem.
+ * 
+ * <p>The shooter subsystem encapsulates the motors used to shoot balls out of the cannon.
+ */
 public class ShooterSubsystem extends SubsystemBase implements Loggable {
   // Motor Controllers
 
@@ -49,6 +54,7 @@ public class ShooterSubsystem extends SubsystemBase implements Loggable {
           RoboRIO.CAN.kPortsDoubleSolenoidLauncherCannon[0],
           RoboRIO.CAN.kPortsDoubleSolenoidLauncherCannon[1]);
 
+  /** Initializes the shooter subsystem. */
   public ShooterSubsystem() {
     // Make the right motor follow the left.
     m_motorShooterRight.follow(m_motorShooterLeft);

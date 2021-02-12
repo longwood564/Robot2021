@@ -9,7 +9,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -27,12 +26,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
+/** Contains all of the robot's subsystems, commands, and button mappings. */
 public class RobotContainer {
   // Subsystems
 
@@ -50,7 +44,7 @@ public class RobotContainer {
   private final F310Controller m_controllerManip =
       new F310Controller(DriverStation.kPortControllerManip);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // Initializes the default commands and command bindings.
   public RobotContainer() {
     // Configure default commands.
 
@@ -67,12 +61,7 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
+  /** Configures button to command bindings. */
   private void configureButtonBindings() {
     // Configure drive speed multipliers controls.
 
@@ -130,9 +119,9 @@ public class RobotContainer {
   }
 
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * Passes an the autonomous command to the Robot class.
    *
-   * @return the command to run in autonomous
+   * @return The command to run in autonomous.
    */
   public Command getAutonomousCommand() {
     return new PrintCommand("Autonomous is not implemented yet!");
