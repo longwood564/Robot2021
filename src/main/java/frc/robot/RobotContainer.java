@@ -19,11 +19,13 @@ import io.github.oblarg.oblog.annotations.Log;
 import frc.robot.Constants.DriverStation;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 /**
@@ -37,6 +39,7 @@ public class RobotContainer {
 
   @Log private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   @Log private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  @Log private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   @Log private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   @Log private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -118,6 +121,16 @@ public class RobotContainer {
         .whenPressed(
             () -> m_intakeSubsystem.startIntake(IntakeConstants.kSpeedIntake), m_intakeSubsystem)
         .whenReleased(m_intakeSubsystem::stopIntake, m_intakeSubsystem);
+
+    // Configure ball shooting controls.
+
+    m_controllerManip.buttonLs.whenPressed(m_shooterSubsystem::toggleSolenoid, m_shooterSubsystem);
+    m_controllerManip
+        .axisRt
+        .whenPressed(
+            () -> m_shooterSubsystem.startShooting(ShooterConstants.kSpeedShooter),
+            m_shooterSubsystem)
+        .whenReleased(m_shooterSubsystem::stopShooting, m_shooterSubsystem);
   }
 
   /**

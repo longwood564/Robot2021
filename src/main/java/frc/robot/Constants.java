@@ -95,4 +95,10 @@ public final class Constants {
     /** The speed to advance balls through the belt at. */
     public static final double kSpeedBelt = 1.0;
   }
+
+  /** Constants for the Shooter subsystem. */
+  public static final class ShooterConstants {
+    /** The speed to shoot balls at. */
+    public static final double kSpeedShooter = 1.0;
+  }
 }
