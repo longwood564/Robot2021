@@ -72,27 +72,29 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Command setSpeedNormalCommand =
+    // Configure drive speed multipliers controls.
+
+    Command resetDriveSpeedCommand =
         new InstantCommand(
-                () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedNormal),
+                () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedNormal),
                 m_drivetrainSubsystem)
             .withName("Set Normal Speed");
     m_controllerDrive
         .axisLt
         .whenPressed(
             new InstantCommand(
-                    () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedSlow),
+                    () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedSlow),
                     m_drivetrainSubsystem)
                 .withName("Set Slow Speed"))
-        .whenReleased(setSpeedNormalCommand);
+        .whenReleased(resetDriveSpeedCommand);
     m_controllerDrive
         .axisRt
         .whenPressed(
             new InstantCommand(
-                    () -> m_drivetrainSubsystem.setSpeed(DrivetrainConstants.kSpeedFast),
+                    () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedFast),
                     m_drivetrainSubsystem)
                 .withName("Set Fast Speed"))
-        .whenReleased(setSpeedNormalCommand);
+        .whenReleased(resetDriveSpeedCommand);
   }
 
   /**

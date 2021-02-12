@@ -106,7 +106,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
    *
    * @param speed The value will be used as the scaling factor [0..1.0].
    */
-  public void setSpeed(double speed) {
+  public void setDriveSpeed(double speed) {
     m_differentialDrive.setMaxOutput(speed);
   }
 }
