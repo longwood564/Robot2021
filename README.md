@@ -10,6 +10,7 @@ We welcome contributions from team members of all levels of experience! This sec
 We use the [Google Java Style guide](https://google.github.io/styleguide/javaguide.html) as a starting point for our style, making the following exceptions:
 - Braces do not have to be used where optional ([4.1.1](https://google.github.io/styleguide/javaguide.html#s4.1.1-braces-always-used)).
   - Reason: This is less verbose, and is what our formatter opts for.
+  - Exception: If the `if` has braces, the `else if` and `else` should have braces.
 - We name our constants with lower camel case, preceeded with a `k`, e.g. `kPortControllerDrive` ([5.2.4](https://google.github.io/styleguide/javaguide.html#s5.2.4-constant-names)).
   - Reason: This is preferred by WPILib and other FRC teams.
 - We name out field names with lower camel case, preceeded with an `m_`, e.g. `m_drivetrainSubsystem` ([5.2.5](https://google.github.io/styleguide/javaguide.html#s5.2.5-non-constant-field-names)).
