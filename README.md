@@ -76,7 +76,7 @@ private final Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 #### Writing Javadoc Descriptions
 For consistency, the most important takeaway of this section is to **omit phrases like "This class _" or "This method _"**. This helps keep documentation from going on too long, and ensures consistency.
 
-When writing a Javadoc description, if the item *does* something, start it with "<verb>s". For example, here's a method which sets a value:
+When writing a Javadoc description, if the item *does* something, start it with the verb. For example, here's a method which sets a value:
 ```java
 /**
  * Sets the speed that the robot drives at.
