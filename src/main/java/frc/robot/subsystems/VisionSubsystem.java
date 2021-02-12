@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import io.github.oblarg.oblog.Loggable;
@@ -26,10 +27,14 @@ public class VisionSubsystem extends SubsystemBase implements Loggable {
       columnIndex = 0,
       tabName = "Driver View")
   // USB Camera Class
-  UsbCamera m_camera = CameraServer.getInstance().startAutomaticCapture();
+  UsbCamera m_camera;
 
   /** Initializes the vision subsystem. */
   public VisionSubsystem() {
-    m_camera.setResolution(960, 720);
+    // If we're runnning on the real robot, enable the camera.
+    if (RobotBase.isReal()) {
+      m_camera = CameraServer.getInstance().startAutomaticCapture();
+      m_camera.setResolution(960, 720);
+    }
   }
 }
