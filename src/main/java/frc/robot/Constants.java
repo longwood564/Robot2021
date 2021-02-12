@@ -85,6 +85,6 @@ public final class Constants {
     /** The normal speed to drive at. */
     public static final double kSpeedNormal = 0.85;
     /** The fast speed to drive at. */
-    public static final double kSpeedFast = 1;
+    public static final double kSpeedFast = 1.0;
   }
 }
