@@ -18,10 +18,12 @@ import io.github.oblarg.oblog.annotations.Log;
 
 import frc.robot.Constants.DriverStation;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 /**
@@ -34,6 +36,7 @@ public class RobotContainer {
   // Subsystems
 
   @Log private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  @Log private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   @Log private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   @Log private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -95,6 +98,26 @@ public class RobotContainer {
                     m_drivetrainSubsystem)
                 .withName("Set Fast Speed"))
         .whenReleased(resetDriveSpeedCommand);
+
+    // Configure ball intake controls.
+
+    Command resetBeltCommand = new InstantCommand(m_intakeSubsystem::stopBelt, m_intakeSubsystem);
+    m_controllerManip
+        .buttonLb
+        .whenPressed(
+            () -> m_intakeSubsystem.startBelt(IntakeConstants.kSpeedBelt), m_intakeSubsystem)
+        .whenReleased(resetBeltCommand);
+    m_controllerManip
+        .buttonRb
+        .whenPressed(
+            () -> m_intakeSubsystem.startBelt(-IntakeConstants.kSpeedBelt), m_intakeSubsystem)
+        .whenReleased(resetBeltCommand);
+
+    m_controllerManip
+        .axisLt
+        .whenPressed(
+            () -> m_intakeSubsystem.startIntake(IntakeConstants.kSpeedIntake), m_intakeSubsystem)
+        .whenReleased(m_intakeSubsystem::stopIntake, m_intakeSubsystem);
   }
 
   /**

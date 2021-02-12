@@ -87,4 +87,12 @@ public final class Constants {
     /** The fast speed to drive at. */
     public static final double kSpeedFast = 1.0;
   }
+
+  /** Constants for the Intake subsystem. */
+  public static final class IntakeConstants {
+    /** The speed to intake balls at. */
+    public static final double kSpeedIntake = 0.5;
+    /** The speed to advance balls through the belt at. */
+    public static final double kSpeedBelt = 1.0;
+  }
 }
