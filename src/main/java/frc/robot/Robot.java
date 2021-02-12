@@ -8,6 +8,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -33,6 +34,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // Disable Joystick connection warnings. This is redundant with the call to this method in
+    // disabledInit(), but is necessary for supressing all errors. If we only run this method in
+    // disabledInit(), it seems that one or two warnings still slip by.
+    DriverStation.getInstance().silenceJoystickConnectionWarning(true);
+
     // Disable LiveWindow telemetry. LiveWindow serves two main purposes:
     //  - Monitoring actuator/sensor values. If you look in the constructors of most WPILib
     //    libraries, you'll see that they automatically register themselves in the LiveWindow
@@ -85,7 +91,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    // Disable joystick connection warnings.
+    DriverStation.getInstance().silenceJoystickConnectionWarning(true);
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -107,6 +116,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    // Enable joystick connection warnings.
+    DriverStation.getInstance().silenceJoystickConnectionWarning(true);
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
