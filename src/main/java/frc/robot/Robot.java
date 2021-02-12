@@ -19,9 +19,11 @@ import io.github.oblarg.oblog.Logger;
 
 /** Initializes the robot, and handles mode changes. */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-
+  // Robot Container Class
   private RobotContainer m_robotContainer;
+
+  // Autonomous Command
+  private Command m_autonomousCommand;
 
   /**
    * This method is run when the robot is first started up, regardless of whether real or simulated.
