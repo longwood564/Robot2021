@@ -10,6 +10,7 @@ on:
     # Trigger the workflow on PRs to the main branch.
     branches: [main]
 
+jobs:
   # Create a build job.
   build:
     # Run on latest Ubuntu.
