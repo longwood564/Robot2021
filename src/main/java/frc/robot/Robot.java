@@ -75,6 +75,14 @@ public class Robot extends TimedRobot {
     Logger.updateEntries();
   }
 
+  /** This function is run when the simulation is first started up, in addition to robotInit(). */
+  @Override
+  public void simulationInit() {}
+
+  /** This function is called periodically during the simulation. */
+  @Override
+  public void simulationPeriodic() {}
+
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {}
