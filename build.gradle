@@ -140,7 +140,6 @@ spotless {
     }
     format 'misc', {
         target 'License.md'
-        ratchetFrom 'origin/main'
         licenseHeader 'Copyright (c) $YEAR, Team 564', 'All rights reserved.'
     }
 }
