@@ -1,4 +1,4 @@
-# Robot2021
+# Robot2021 ![CI Badge](https://github.com/longwood564/Robot2021/workflows/CI/badge.svg)
 
 The next generation Robot2020.
 
