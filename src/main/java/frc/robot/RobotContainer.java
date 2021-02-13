@@ -84,22 +84,24 @@ public class RobotContainer {
 
     // Configure ball intake controls.
 
-    Command resetBeltCommand = new InstantCommand(m_intakeSubsystem::stopBelt, m_intakeSubsystem);
     m_controllerManip
-        .buttonLb
+        .axisLeftY
         .whenPressed(
-            () -> m_intakeSubsystem.startBelt(IntakeConstants.kSpeedBelt), m_intakeSubsystem)
-        .whenReleased(resetBeltCommand);
-    m_controllerManip
-        .buttonRb
-        .whenPressed(
-            () -> m_intakeSubsystem.startBelt(-IntakeConstants.kSpeedBelt), m_intakeSubsystem)
-        .whenReleased(resetBeltCommand);
+            () ->
+                m_intakeSubsystem.startBelt(
+                    Math.signum(m_controllerManip.getY(GenericHID.Hand.kLeft))
+                        * IntakeConstants.kSpeedBelt),
+            m_intakeSubsystem)
+        .whenReleased(m_intakeSubsystem::stopBelt, m_intakeSubsystem);
 
     m_controllerManip
-        .axisLt
+        .axisRightY
         .whenPressed(
-            () -> m_intakeSubsystem.startIntake(IntakeConstants.kSpeedIntake), m_intakeSubsystem)
+            () ->
+                m_intakeSubsystem.startIntake(
+                    Math.signum(m_controllerManip.getY(GenericHID.Hand.kRight))
+                        * IntakeConstants.kSpeedIntake),
+            m_intakeSubsystem)
         .whenReleased(m_intakeSubsystem::stopIntake, m_intakeSubsystem);
 
     // Configure ball shooting controls.
