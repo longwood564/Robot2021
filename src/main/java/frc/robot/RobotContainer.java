@@ -67,24 +67,19 @@ public class RobotContainer {
 
     Command resetDriveSpeedCommand =
         new InstantCommand(
-                () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedNormal),
-                m_drivetrainSubsystem)
-            .withName("Set Normal Speed");
+            () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedNormal),
+            m_drivetrainSubsystem);
     m_controllerDrive
         .axisLt
         .whenPressed(
-            new InstantCommand(
-                    () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedSlow),
-                    m_drivetrainSubsystem)
-                .withName("Set Slow Speed"))
+            () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedSlow),
+            m_drivetrainSubsystem)
         .whenReleased(resetDriveSpeedCommand);
     m_controllerDrive
         .axisRt
         .whenPressed(
-            new InstantCommand(
-                    () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedFast),
-                    m_drivetrainSubsystem)
-                .withName("Set Fast Speed"))
+            () -> m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedFast),
+            m_drivetrainSubsystem)
         .whenReleased(resetDriveSpeedCommand);
 
     // Configure ball intake controls.
