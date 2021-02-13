@@ -1,0 +1,32 @@
+# This is a basic workflow to build and lint robot code.
+
+name: CI
+
+on:
+  push:
+    # Trigger the workflow on pushes to the main branch.
+    branches: [main]
+  pull_request:
+    # Trigger the workflow on PRs to the main branch.
+    branches: [main]
+
+jobs:
+  # Create a build job.
+  build:
+    # Run on latest Ubuntu.
+    runs-on: ubuntu-latest
+
+    # Use the WPILib docker container.
+    container: wpilib/roborio-cross-ubuntu:2021-18.04
+
+    steps:
+      # Check out the repository.
+      - uses: actions/checkout@v2
+
+      # Grant execute permission for gradlew.
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Build the robot code.
+      - name: Compile robot code
+        run: ./gradlew build
