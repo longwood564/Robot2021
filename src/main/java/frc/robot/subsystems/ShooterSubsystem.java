@@ -16,7 +16,7 @@ import frc.robot.Constants.RoboRIO;
 
 /**
  * Represents the shooter subsystem.
- * 
+ *
  * <p>The shooter subsystem encapsulates the motors used to shoot balls out of the cannon.
  */
 public class ShooterSubsystem extends SubsystemBase implements Loggable {
