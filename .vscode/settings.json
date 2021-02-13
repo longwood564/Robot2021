@@ -16,5 +16,9 @@
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.format.enabled": false,
   "java.saveActions.organizeImports": false,
-  "java.server.launchMode": "Standard"
+  "java.server.launchMode": "Standard",
+  "[java]": {
+    "spotlessGradle.format.enable": true,
+    "spotlessGradle.diagnostics.enable": true
+  }
 }
