@@ -71,7 +71,7 @@ private final Encoder m_encoderRelativeRight =
         true);
 
 // Gyroscope <THIS IS A GROUP COMMENT>
-private final Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+private final Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 ```
 
 #### Writing Javadoc Descriptions
