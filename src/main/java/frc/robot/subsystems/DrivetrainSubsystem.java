@@ -43,29 +43,13 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
 
   @Log(name = "Left Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 3)
   private final Encoder m_encoderRelativeLeft =
-      new Encoder(
-          RoboRIO.DIO.kPortsEncoderDriveLeft[0],
-          RoboRIO.DIO.kPortsEncoderDriveLeft[1],
-          RoboRIO.DIO.kPortsEncoderDriveLeft[2]);
+      new Encoder(RoboRIO.DIO.kPortsEncoderDriveLeft[0], RoboRIO.DIO.kPortsEncoderDriveLeft[1]);
 
-  @Log(name = "Right Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 5)
+  @Log(name = "Right Encoder (Relative)", width = 2, height = 1, rowIndex = 1, columnIndex = 3)
   // This encoder must be reversed so that values will be consistent with the left drive encoder.
   private final Encoder m_encoderRelativeRight =
       new Encoder(
-          RoboRIO.DIO.kPortsEncoderDriveRight[0],
-          RoboRIO.DIO.kPortsEncoderDriveRight[1],
-          RoboRIO.DIO.kPortsEncoderDriveRight[2],
-          true);
-
-  // Duty Cycle Encoders (Measures absolute distance)
-
-  @Log(name = "Left Encoder (Absolute)", width = 2, height = 2, rowIndex = 1, columnIndex = 3)
-  private final DutyCycleEncoder m_encoderAbsoluteLeft =
-      new DutyCycleEncoder(RoboRIO.DIO.kPortsEncoderDriveLeft[3]);
-
-  @Log(name = "Right Encoder (Absolute)", width = 2, height = 2, rowIndex = 1, columnIndex = 5)
-  private final DutyCycleEncoder m_encoderAbsoluteRight =
-      new DutyCycleEncoder(RoboRIO.DIO.kPortsEncoderDriveRight[3]);
+          RoboRIO.DIO.kPortsEncoderDriveRight[0], RoboRIO.DIO.kPortsEncoderDriveRight[1], true);
 
   // Gyroscope
   @Log(name = "Gyroscope", width = 2, height = 2, rowIndex = 0, columnIndex = 7)

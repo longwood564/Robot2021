@@ -45,13 +45,13 @@ public final class Constants {
     /** Constants for the Digital Input/Output ports. */
     public static final class DIO {
       /** The ports of the left drive encoder. */
-      public static final int[] kPortsEncoderDriveLeft = {0, 1, 2, 3};
+      public static final int[] kPortsEncoderDriveLeft = {0, 1};
       /** The ports of the right drive encoder. */
-      public static final int[] kPortsEncoderDriveRight = {4, 5, 6, 7};
+      public static final int[] kPortsEncoderDriveRight = {2, 3};
       /** The port of the photoelectric sensor at the bottom of the storage, where balls enter. */
-      public static final int kPortPhotoelectricSensorEnter = 8;
+      public static final int kPortPhotoelectricSensorEnter = 4;
       /** The port of the photoelectric sensor at the top of the storage, where balls leave. */
-      public static final int kPortPhotoelectricSensorExit = 9;
+      public static final int kPortPhotoelectricSensorExit = 5;
     }
 
     /** Constants for the Analog Input ports. */
