@@ -52,8 +52,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
           RoboRIO.DIO.kPortsEncoderDriveRight[0], RoboRIO.DIO.kPortsEncoderDriveRight[1], true);
 
   // Gyroscope
-  @Log(name = "Gyroscope", width = 2, height = 2, rowIndex = 0, columnIndex = 7)
-  private final Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+  @Log(name = "Gyroscope", width = 2, height = 3, rowIndex = 0, columnIndex = 5)
+  private final Gyro m_gyro = new ADXRS450_Gyro();
 
   @Log(name = "Drive", width = 2, height = 3, rowIndex = 0, columnIndex = 0)
   @Log(
