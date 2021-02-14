@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -69,11 +70,28 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
 
   /** Initializes the drivetrain subsystem. */
   public DrivetrainSubsystem() {
+    // Revert all motor controller configurations to their factory default values.
+    m_motorFrontLeft.configFactoryDefault();
+    m_motorFrontRight.configFactoryDefault();
+    m_motorBackLeft.configFactoryDefault();
+    m_motorBackRight.configFactoryDefault();
+
     // Make the back motors follow the front motors.
     m_motorBackLeft.follow(m_motorFrontLeft);
     m_motorBackRight.follow(m_motorFrontRight);
   }
 
+  /**
+   * Sets the neutral mode of the drive motors.
+   *
+   * @param mode The neutral mode.
+   */
+  public void setNeutralMode(NeutralMode mode) {
+    m_motorFrontLeft.setNeutralMode(mode);
+    m_motorFrontRight.setNeutralMode(mode);
+    m_motorBackLeft.setNeutralMode(mode);
+    m_motorBackRight.setNeutralMode(mode);
+  }
   /**
    * Drives the robot using arcade drive.
    *

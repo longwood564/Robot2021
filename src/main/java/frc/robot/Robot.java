@@ -83,6 +83,9 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     // Disable joystick connection warnings.
     DriverStation.getInstance().silenceJoystickConnectionWarning(true);
+
+    // Schedule the disabled init command.
+    m_robotContainer.getDisabledInitCommand().schedule();
   }
 
   /** This method is run periodically in disabled mode. */
@@ -92,7 +95,7 @@ public class Robot extends TimedRobot {
   /** This method is run when the robot enters autonomous mode. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutoInitCommand();
 
     // Schedule the autonomous command.
     if (m_autonomousCommand != null) {
@@ -117,6 +120,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    // Schedule the teleop init command.
+    m_robotContainer.getTeleopInitCommand().schedule();
   }
 
   /** This method is run periodically in teleoperated mode. */
