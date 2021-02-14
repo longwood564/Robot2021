@@ -10,6 +10,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -20,6 +21,9 @@ import frc.robot.Constants.DriverStation;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.AutoInitCommand;
+import frc.robot.commands.DisabledInitCommand;
+import frc.robot.commands.TeleopInitCommand;
 import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -36,6 +40,14 @@ public class RobotContainer {
   @Log private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
   // Commands
+
+  private final DisabledInitCommand m_disabledInitCommand =
+      new DisabledInitCommand(m_drivetrainSubsystem);
+  private final AutoInitCommand m_autoInitCommand =
+      new AutoInitCommand(m_drivetrainSubsystem, m_shooterSubsystem);
+  private final TeleopInitCommand m_teleopInitCommand =
+      new TeleopInitCommand(m_drivetrainSubsystem, m_shooterSubsystem);
+  private final PrintCommand m_autoCommand = new PrintCommand("Autonomous is not implemented yet!");
 
   // Driver Input
 
@@ -114,11 +126,40 @@ public class RobotContainer {
   }
 
   /**
-   * Passes an the autonomous command to the Robot class.
+   * Passes the disabled init command to the Robot class.
    *
-   * @return The command to run in autonomous.
+   * @return The command to run.
    */
-  public Command getAutonomousCommand() {
-    return new PrintCommand("Autonomous is not implemented yet!");
+  public Command getDisabledInitCommand() {
+    return m_disabledInitCommand;
+  }
+
+  /**
+   * Passes the autonomous init command to the Robot class.
+   *
+   * @return The command to run.
+   */
+  public Command getAutoInitCommand() {
+    // Get the current autonomous command. This may be obtained from a SendableChooser.
+    Command autoCommand = m_autoCommand;
+
+    // WPILibJ keeps track of every command that gets added to a group, adding them to a blacklist.
+    // If you try scheduling, or creating another group with a blacklisted command, an exception is
+    // thrown. Since we know that, in Robot.java, there won't be more than one init method running
+    // at once, we can safely assume that this won't result in any weirdness with different
+    // instances of these getting interleaved.
+    CommandGroupBase.clearGroupedCommand(m_autoInitCommand);
+    CommandGroupBase.clearGroupedCommand(autoCommand);
+
+    return m_autoInitCommand.andThen(autoCommand);
+  }
+
+  /**
+   * Passes the teleop init command to the Robot class.
+   *
+   * @return The command to run.
+   */
+  public Command getTeleopInitCommand() {
+    return m_teleopInitCommand;
   }
 }

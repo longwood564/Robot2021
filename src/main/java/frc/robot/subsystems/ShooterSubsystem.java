@@ -38,17 +38,7 @@ public class ShooterSubsystem extends SubsystemBase implements Loggable {
 
   // Solenoids
 
-  // We can't log this as-is because it is added to Shuffleboard as a Sendable which is an actuator.
-  // Actuator widgets can be used to set the value of the hardware they control, when LiveWindow
-  // is enabled - so, in test mode. As a safety feature, whenever we change to a mode other than
-  // test mode, every actuator is reset to a "safe" value in order to ensure that there won't be
-  // a bad situation created by values that were set in test mode. Unfortunately, even though we
-  // don't use test mode, these safety checks will still run when changing modes.
-  //
-  // Ultimately, the result of this is that, if we add the double solenoid as a Sendable, it will
-  // be subject to safety checks, and, when entering teleoperated mode, get set to the kOff state.
-  // This will prevent the toggle method from working properly. Rather then logging the solenoid
-  // object, we log getSolenoidValue().
+  @Log
   private final DoubleSolenoid m_doubleSolenoidShooter =
       new DoubleSolenoid(
           RoboRIO.CAN.kPortsDoubleSolenoidLauncherCannon[0],
@@ -58,8 +48,13 @@ public class ShooterSubsystem extends SubsystemBase implements Loggable {
   public ShooterSubsystem() {
     // Make the right motor follow the left.
     m_motorShooterRight.follow(m_motorShooterLeft);
+  }
 
-    // Initialize the position of the double solenoid.
+  /**
+   * Resets the position of the double solenoid. This is nice to have because exiting test mode
+   * resets the solenoid to kOff, which breaks toggle().
+   */
+  public void resetSolenoid() {
     m_doubleSolenoidShooter.set(DoubleSolenoid.Value.kReverse);
   }
 
@@ -80,15 +75,5 @@ public class ShooterSubsystem extends SubsystemBase implements Loggable {
   /** Toggles the double solenoids to raise or retract the shooter. */
   public void toggleSolenoid() {
     m_doubleSolenoidShooter.toggle();
-  }
-
-  /**
-   * Gets the value of the double solenoid as a string, rather than the Value enum.
-   *
-   * @return The name of the enum value corresponding to the solenoid state.
-   */
-  @Log(name = "Shooter Solenoid", width = 2, height = 1, rowIndex = 1, columnIndex = 0)
-  private String getSolenoidValue() {
-    return m_doubleSolenoidShooter.get().name();
   }
 }
