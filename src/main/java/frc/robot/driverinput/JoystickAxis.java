@@ -60,6 +60,6 @@ public class JoystickAxis extends Button {
    */
   @Override
   public boolean get() {
-    return m_joystick.getRawAxis(m_axisNumber) >= m_lowerBound;
+    return Math.abs(m_joystick.getRawAxis(m_axisNumber)) >= m_lowerBound;
   }
 }
