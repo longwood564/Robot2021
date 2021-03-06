@@ -39,16 +39,25 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
       new WPI_VictorSPX(RoboRIO.CAN.kPortMotorDriveBackRight);
 
   // Quadrature Encoders (Measures relative distance)
+  // These use 1X decoding to avoid noise in velocity measurements. For more info, see:
+  // https://www.chiefdelphi.com/t/psa-high-resolution-encoder-noise-w-wpilib-encoder-class/378967
 
   @Log(name = "Left Encoder (Relative)", width = 2, height = 1, rowIndex = 0, columnIndex = 3)
-  private final Encoder m_encoderRelativeLeft =
-      new Encoder(RoboRIO.DIO.kPortsEncoderDriveLeft[0], RoboRIO.DIO.kPortsEncoderDriveLeft[1]);
+  private final Encoder m_encoderLeft =
+      new Encoder(
+          RoboRIO.DIO.kPortsEncoderDriveLeft[0],
+          RoboRIO.DIO.kPortsEncoderDriveLeft[1],
+          false,
+          EncodingType.k1X);
 
   @Log(name = "Right Encoder (Relative)", width = 2, height = 1, rowIndex = 1, columnIndex = 3)
   // This encoder must be reversed so that values will be consistent with the left drive encoder.
-  private final Encoder m_encoderRelativeRight =
+  private final Encoder m_encoderRight =
       new Encoder(
-          RoboRIO.DIO.kPortsEncoderDriveRight[0], RoboRIO.DIO.kPortsEncoderDriveRight[1], true);
+          RoboRIO.DIO.kPortsEncoderDriveRight[0],
+          RoboRIO.DIO.kPortsEncoderDriveRight[1],
+          true,
+          EncodingType.k1X);
 
   // Gyroscope
   @Log(name = "Gyroscope", width = 2, height = 3, rowIndex = 0, columnIndex = 5)
@@ -77,6 +86,17 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
     // Make the back motors follow the front motors.
     m_motorBackLeft.follow(m_motorFrontLeft);
     m_motorBackRight.follow(m_motorFrontRight);
+
+    // Configure the encoder scaling factor.
+    m_encoderLeft.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
+    m_encoderRight.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
+
+    // Configure the encoder samples to average.
+    m_encoderLeft.setSamplesToAverage(DrivetrainConstants.kEncoderSamplesToAverage);
+    m_encoderRight.setSamplesToAverage(DrivetrainConstants.kEncoderSamplesToAverage);
+
+    m_encoderLeft.reset();
+    m_encoderRight.reset();
   }
 
   /**

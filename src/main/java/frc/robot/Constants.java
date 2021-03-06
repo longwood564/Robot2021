@@ -8,6 +8,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Units;
+
 /** Constants for ports on the robot and driver station, and for each subsystem. */
 public final class Constants {
   /**
@@ -69,7 +71,11 @@ public final class Constants {
     public static final int kPortControllerManip = 1;
   }
 
-  /** Constants for the drivetrain subsystem. */
+  /**
+   * Constants for the drivetrain subsystem.
+   *
+   * <p>These values are susceptible to unit errors, so unit comments are required for all of these.
+   */
   public static final class DrivetrainConstants {
     // TODO: Check these speeds - especially kSpeedFast.
     /** The slow speed to drive at. */
@@ -78,6 +84,44 @@ public final class Constants {
     public static final double kSpeedNormal = 0.85;
     /** The fast speed to drive at. */
     public static final double kSpeedFast = 0.95;
+    // Physical Robot Constants
+
+    /**
+     * The radius of wheels.
+     *
+     * <p>Unit: Meters.
+     */
+    public static final double kWheelRadius = Units.inchesToMeters(6);
+    // Encoder Constants
+
+    /**
+     * The cycles per revolution outputted by the encoder.
+     *
+     * <p>Unit: Cycles / Revolution, or Pulses / Revolutions.
+     */
+    private static final int kEncoderCyclesPerRev = 2048;
+    /**
+     * The distance traveled in one revolution, equivalent to the circumference of the wheels.
+     *
+     * <p>Unit: Meters / Revolution.
+     */
+    private static final double kMetersPerRev = Math.PI * kWheelRadius;
+    /**
+     * The distance traveled in one pulse.
+     *
+     * <p>This constant does not depend on the gear ratio because the encoder is placed after the
+     * gearbox.
+     *
+     * <p>Unit: Meters / Pulse, or Meters / Cycle. This will get multiplied by the pulse reading,
+     * and then becomes just meters.
+     */
+    public static final double kEncoderDistancePerPulse = kMetersPerRev / kEncoderCyclesPerRev;
+    /**
+     * The number of encoder samples to average. This is greater than the default, to reduce noise.
+     *
+     * <p>Unit: Samples.
+     */
+    public static final int kEncoderSamplesToAverage = 5;
   }
 
   /** Constants for the intake subsystem. */
