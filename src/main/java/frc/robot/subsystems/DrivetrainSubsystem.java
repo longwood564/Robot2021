@@ -76,6 +76,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   private final DifferentialDrive m_differentialDrive =
       new DifferentialDrive(m_motorFrontLeft, m_motorFrontRight);
 
+  // Odometry
+  private DifferentialDriveOdometry m_odometry =
+      new DifferentialDriveOdometry(m_gyro.getRotation2d());
+
   /** Initializes the drivetrain subsystem. */
   public DrivetrainSubsystem() {
     // Revert all motor controller configurations to their factory default values.
@@ -96,6 +100,16 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
     m_encoderLeft.setSamplesToAverage(DrivetrainConstants.kEncoderSamplesToAverage);
     m_encoderRight.setSamplesToAverage(DrivetrainConstants.kEncoderSamplesToAverage);
 
+    // Reset the robot odometry.
+    resetOdometry();
+  }
+
+  /** This method is run periodically in teleoperated mode. */
+  @Override
+  public void periodic() {
+    // Update the odometry.
+    m_odometry.update(
+        m_gyro.getRotation2d(), m_encoderLeft.getDistance(), m_encoderRight.getDistance());
     m_encoderLeft.reset();
     m_encoderRight.reset();
     m_gyro.reset();
@@ -112,6 +126,16 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
     m_motorBackLeft.setNeutralMode(mode);
     m_motorBackRight.setNeutralMode(mode);
   }
+
+  /**
+   * Sets the speed that the robot drives at.
+   *
+   * @param speed The value will be used as the scaling factor [0..1.0].
+   */
+  public void setDriveSpeed(double speed) {
+    m_differentialDrive.setMaxOutput(speed);
+  }
+
   /**
    * Drives the robot using arcade drive.
    *
@@ -124,11 +148,48 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   }
 
   /**
-   * Sets the speed that the robot drives at.
+   * Resets the sensors and pose used for odometry. The gyro is reset to a heading of zero, and the
+   * encoder counts are set to zero.
    *
-   * @param speed The value will be used as the scaling factor [0..1.0].
+   * <p>Make sure any changes made here are reflected in DrivetrainSubsystem()!
+   *
+   * @param pose The position on the field that the robot is at.
    */
-  public void setDriveSpeed(double speed) {
-    m_differentialDrive.setMaxOutput(speed);
+  public void resetOdometry(Pose2d pose) {
+    // Reset the encoders.
+    m_encoderLeft.reset();
+    m_encoderRight.reset();
+
+    // Reset the gyroscope.
+    m_gyro.reset();
+
+    // Reset the odometry.
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+  }
+
+  /**
+   * Resets the sensors and pose used for odometry. The gyro is reset to a heading of zero, and the
+   * encoder counts are set to zero. This method uses the default pose at 0,0.
+   */
+  public void resetOdometry() {
+    resetOdometry(new Pose2d());
+  }
+
+  /**
+   * Gets the current wheel speeds of the robot.
+   *
+   * @return The wheel speeds.
+   */
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_encoderLeft.getRate(), m_encoderRight.getRate());
+  }
+
+  /**
+   * Gets the current estimated pose of the robot.
+   *
+   * @return The pose.
+   */
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
   }
 }
