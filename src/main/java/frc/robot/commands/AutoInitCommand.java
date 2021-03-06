@@ -23,6 +23,8 @@ public class AutoInitCommand extends InstantCommand {
       DrivetrainSubsystem drivetrainSubsystem, ShooterSubsystem shooterSubsystem) {
     m_drivetrainSubsystem = drivetrainSubsystem;
     m_shooterSubsystem = shooterSubsystem;
+
+    addRequirements(drivetrainSubsystem, shooterSubsystem);
   }
 
   /** This method is run periodically while the command is scheduled. */

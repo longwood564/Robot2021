@@ -19,6 +19,8 @@ public class DisabledInitCommand extends InstantCommand {
   /** Initializes the command. */
   public DisabledInitCommand(DrivetrainSubsystem drivetrainSubsystem) {
     m_drivetrainSubsystem = drivetrainSubsystem;
+
+    addRequirements(drivetrainSubsystem);
   }
 
   /** This method is run periodically while the command is scheduled. */
