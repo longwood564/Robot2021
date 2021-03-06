@@ -154,6 +154,19 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   }
 
   /**
+   * Drives the robot using tank drive, with voltages.
+   *
+   * @param leftVolts The left output.
+   * @param rightVolts The right output.
+   */
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_motorFrontLeft.setVoltage(leftVolts);
+    m_motorFrontRight.setVoltage(-rightVolts);
+    // Feed DifferentialDrive, so that the safety feature doesn't get activated.
+    m_differentialDrive.feed();
+  }
+
+  /**
    * Resets the sensors and pose used for odometry. The gyro is reset to a heading of zero, and the
    * encoder counts are set to zero.
    *
