@@ -80,6 +80,9 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   private DifferentialDriveOdometry m_odometry =
       new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
+  // Field Representation
+  private Field2d m_field = new Field2d();
+
   /** Initializes the drivetrain subsystem. */
   public DrivetrainSubsystem() {
     // Revert all motor controller configurations to their factory default values.
@@ -102,6 +105,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
 
     // Reset the robot odometry.
     resetOdometry();
+
+    // Manually put this with the SmartDashboard API, because this doesn't function as a widget in
+    // ShuffleBoard, only in the simulator and in Glass.
+    SmartDashboard.putData("Field", m_field);
   }
 
   /** This method is run periodically in teleoperated mode. */
@@ -110,9 +117,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
     // Update the odometry.
     m_odometry.update(
         m_gyro.getRotation2d(), m_encoderLeft.getDistance(), m_encoderRight.getDistance());
-    m_encoderLeft.reset();
-    m_encoderRight.reset();
-    m_gyro.reset();
+    // Update the field.
+    m_field.setRobotPose(m_odometry.getPoseMeters());
   }
 
   /**
