@@ -12,8 +12,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import io.github.oblarg.oblog.Loggable;
@@ -23,6 +28,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.RoboRIO;
 
 /**
@@ -65,10 +71,17 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
           true,
           EncodingType.k1X);
 
-  // Gyroscope
+  // Simulated Quadrature Encoders
+
+  private final EncoderSim m_encoderLeftSim = new EncoderSim(m_encoderLeft);
+  private final EncoderSim m_encoderRightSim = new EncoderSim(m_encoderRight);
+
   @Log(name = "Gyroscope", width = 2, height = 3, rowIndex = 0, columnIndex = 5)
   // Gyroscope
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+
+  // Simulated Gyroscope
+  private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
   @Log(name = "Drive", width = 2, height = 3, rowIndex = 0, columnIndex = 0)
   @Log(
@@ -81,6 +94,20 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   // Drive Class
   private final DifferentialDrive m_differentialDrive =
       new DifferentialDrive(m_motorFrontLeft, m_motorFrontRight);
+
+  // Simulated Drive Class
+  private DifferentialDrivetrainSim m_differentialDriveSim =
+      new DifferentialDrivetrainSim(
+          LinearSystemId.identifyDrivetrainSystem(
+              DrivetrainConstants.Feedforward.kV,
+              DrivetrainConstants.Feedforward.kA,
+              DrivetrainConstants.Feedforward.kVAngular,
+              DrivetrainConstants.Feedforward.kAAngular),
+          DCMotor.getCIM(4),
+          DrivetrainConstants.kGearRatio,
+          DrivetrainConstants.kTrackWidth,
+          DrivetrainConstants.kWheelRadius,
+          null);
 
   // Odometry
   private DifferentialDriveOdometry m_odometry =
@@ -125,6 +152,25 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
         m_gyro.getRotation2d(), m_encoderLeft.getDistance(), m_encoderRight.getDistance());
     // Update the field.
     m_field.setRobotPose(m_odometry.getPoseMeters());
+  }
+
+  /** This method is run periodically in simulated teleoperated mode. */
+  @Override
+  public void simulationPeriodic() {
+    // Set the inputs to the system.
+    m_differentialDriveSim.setInputs(
+        m_motorFrontLeft.get() * RobotController.getInputVoltage(),
+        -m_motorFrontRight.get() * RobotController.getInputVoltage());
+
+    // Advance the model.
+    m_differentialDriveSim.update(0.02);
+
+    // Update the sensors.
+    m_encoderLeftSim.setDistance(m_differentialDriveSim.getLeftPositionMeters());
+    m_encoderLeftSim.setRate(m_differentialDriveSim.getLeftVelocityMetersPerSecond());
+    m_encoderRightSim.setDistance(m_differentialDriveSim.getRightPositionMeters());
+    m_encoderRightSim.setRate(m_differentialDriveSim.getRightVelocityMetersPerSecond());
+    m_gyroSim.setAngle(-m_differentialDriveSim.getHeading().getDegrees());
   }
 
   /**
