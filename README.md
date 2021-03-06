@@ -98,7 +98,7 @@ Now, subsystems are a bit of a weird middle ground. In a way they *are* the phys
  *
  * <p>The drivetrain encapsulates the wheels the robot moves around with, the motors that power
  * them, and the encoders that measure their movement. This subsystem also encapsulates the
- * gyrometer, because it is tightly integrated with the robot driving.
+ * gyroscope, because it is tightly integrated with the robot driving.
  */
 public class DrivetrainSubsystem extends SubsystemBase {
 ```

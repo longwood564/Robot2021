@@ -24,7 +24,7 @@ import frc.robot.Constants.RoboRIO;
  *
  * <p>The drivetrain encapsulates the wheels the robot moves around with, the motors that power
  * them, and the encoders that measure their movement. This subsystem also encapsulates the
- * gyrometer, because it is tightly integrated with the robot driving.
+ * gyroscope, because it is tightly integrated with the robot driving.
  */
 public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   // Motor Controllers
@@ -61,7 +61,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
 
   // Gyroscope
   @Log(name = "Gyroscope", width = 2, height = 3, rowIndex = 0, columnIndex = 5)
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  // Gyroscope
+  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
   @Log(name = "Drive", width = 2, height = 3, rowIndex = 0, columnIndex = 0)
   @Log(
@@ -97,6 +98,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
 
     m_encoderLeft.reset();
     m_encoderRight.reset();
+    m_gyro.reset();
   }
 
   /**
