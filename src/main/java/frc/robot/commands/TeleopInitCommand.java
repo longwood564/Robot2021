@@ -31,7 +31,9 @@ public class TeleopInitCommand extends InstantCommand {
   @Override
   public void execute() {
     // Set the neutral mode of the drive motors to break, for more responsiveness.
-    m_drivetrainSubsystem.setNeutralMode(NeutralMode.Brake);
+    // m_drivetrainSubsystem.setNeutralMode(NeutralMode.Brake);
+    // We don't want to damage the floor of the new gym, so coast in neutral.
+    m_drivetrainSubsystem.setNeutralMode(NeutralMode.Coast);
 
     // Reset the double solenoid.
     m_shooterSubsystem.resetSolenoid();
