@@ -108,9 +108,14 @@ public class RobotContainer {
 
     m_controllerManip.buttonLs.whenPressed(m_shooterSubsystem::toggleSolenoid, m_shooterSubsystem);
     m_controllerManip
+        .axisLt
+        .whenPressed(
+            () -> m_shooterSubsystem.startShooting(ShooterConstants.kSpeedSlow), m_shooterSubsystem)
+        .whenReleased(m_shooterSubsystem::stopShooting, m_shooterSubsystem);
+    m_controllerManip
         .axisRt
         .whenPressed(
-            () -> m_shooterSubsystem.startShooting(ShooterConstants.kSpeedShooter),
+            () -> m_shooterSubsystem.startShooting(ShooterConstants.kSpeedNormal),
             m_shooterSubsystem)
         .whenReleased(m_shooterSubsystem::stopShooting, m_shooterSubsystem);
   }

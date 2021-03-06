@@ -90,7 +90,9 @@ public final class Constants {
 
   /** Constants for the Shooter subsystem. */
   public static final class ShooterConstants {
-    /** The speed to shoot balls at. */
-    public static final double kSpeedShooter = 1.0;
+    /** The slow speed to shoot balls at. */
+    public static final double kSpeedSlow = 0.4;
+    /** The normal speed to shoot balls at. */
+    public static final double kSpeedNormal = 1.0;
   }
 }
