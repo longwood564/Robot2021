@@ -192,6 +192,9 @@ public class DriveTrajectoryCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_timer.stop();
+
+    // If the command was interrupted, stop wherever we are.
+    if (interrupted) m_drivetrainSubsystem.tankDriveVolts(0, 0);
   }
 
   /** This method is run to check whether the command is finished. */
