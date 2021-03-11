@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -52,7 +53,8 @@ public class RobotContainer {
       new AutoInitCommand(m_drivetrainSubsystem, m_shooterSubsystem);
   private final TeleopInitCommand m_teleopInitCommand =
       new TeleopInitCommand(m_drivetrainSubsystem, m_shooterSubsystem);
-  private final DriveTrajectoryCommand m_autoCommand =
+  // Follows the example trajectory from the FRC Docs Trajectory Tutorial.
+  private final DriveTrajectoryCommand m_exampleAutoCommand =
       new DriveTrajectoryCommand(
           m_drivetrainSubsystem,
           // Start at the origin facing the +X direction
@@ -69,8 +71,21 @@ public class RobotContainer {
   private final F310Controller m_controllerManip =
       new F310Controller(DriverStation.kPortControllerManip);
 
+  // Autonmous Chooser
+  @Log(
+      name = "Autonomous Chooser",
+      width = 2,
+      height = 1,
+      rowIndex = 0,
+      columnIndex = 10,
+      tabName = "Driver View")
+  private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+
   // Initializes the default commands and command bindings.
   public RobotContainer() {
+    // Configure the automous chooser.
+    m_autoChooser.setDefaultOption("Example Autonomous Trajectory", m_exampleAutoCommand);
+
     // Configure default commands.
 
     m_drivetrainSubsystem.setDefaultCommand(
@@ -161,7 +176,7 @@ public class RobotContainer {
    */
   public Command getAutoInitCommand() {
     // Get the current autonomous command. This may be obtained from a SendableChooser.
-    Command autoCommand = m_autoCommand;
+    Command autoCommand = m_autoChooser.getSelected();
 
     // WPILibJ keeps track of every command that gets added to a group, adding them to a blacklist.
     // If you try scheduling, or creating another group with a blacklisted command, an exception is
