@@ -236,6 +236,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
 
     // Reset the odometry.
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    m_differentialDriveSim.setPose(pose);
   }
 
   /**
