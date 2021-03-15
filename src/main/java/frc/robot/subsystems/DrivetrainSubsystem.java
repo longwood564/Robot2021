@@ -128,6 +128,9 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
     m_motorBackLeft.follow(m_motorFrontLeft);
     m_motorBackRight.follow(m_motorFrontRight);
 
+    // Set the default drive speed.
+    setDriveSpeed(DrivetrainConstants.kSpeedNormal);
+
     // Configure the encoder scaling factor.
     m_encoderLeft.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
     m_encoderRight.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
