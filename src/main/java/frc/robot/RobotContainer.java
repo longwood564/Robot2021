@@ -53,6 +53,12 @@ public class RobotContainer {
       new AutoInitCommand(m_drivetrainSubsystem, m_shooterSubsystem);
   private final TeleopInitCommand m_teleopInitCommand =
       new TeleopInitCommand(m_drivetrainSubsystem, m_shooterSubsystem);
+  // Resets the robot position and rotation. Note that running this will interrupt any interruptible
+  // commands that are using the drivetrain subsystem.
+  @Log
+  private final Command m_resetOdometryCommand =
+      new InstantCommand(m_drivetrainSubsystem::resetOdometry, m_drivetrainSubsystem)
+          .withName("Reset Odometry");
   // Follows the example trajectory from the FRC Docs Trajectory Tutorial.
   private final DriveTrajectoryCommand m_exampleAutoCommand =
       new DriveTrajectoryCommand(
