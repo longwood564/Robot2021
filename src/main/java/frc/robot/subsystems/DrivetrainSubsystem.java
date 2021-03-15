@@ -144,7 +144,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
     SmartDashboard.putData("Field", m_field);
   }
 
-  /** This method is run periodically in teleoperated mode. */
+  /** This method is run periodically. */
   @Override
   public void periodic() {
     // Update the odometry.
