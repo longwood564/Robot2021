@@ -264,4 +264,13 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return The robot's heading in degrees, from -180 to 180
+   */
+  public double getHeading() {
+    return -Math.IEEEremainder(m_gyro.getAngle(), 360);
+  }
 }
