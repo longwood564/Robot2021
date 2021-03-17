@@ -8,6 +8,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Units;
+
 /** Constants for ports on the robot and driver station, and for each subsystem. */
 public final class Constants {
   /**
@@ -69,15 +71,166 @@ public final class Constants {
     public static final int kPortControllerManip = 1;
   }
 
-  /** Constants for the drivetrain subsystem. */
+  /**
+   * Constants for the drivetrain subsystem.
+   *
+   * <p>These values are susceptible to unit errors, so unit comments are required for all of these.
+   */
   public static final class DrivetrainConstants {
-    // TODO: Check these speeds - especially kSpeedFast.
-    /** The slow speed to drive at. */
+    // Speed Constants
+
+    /**
+     * The slow speed to drive at.
+     *
+     * <p>Unitless.
+     */
     public static final double kSpeedSlow = 0.5;
-    /** The normal speed to drive at. */
+    /**
+     * The normal speed to drive at.
+     *
+     * <p>Unitless.
+     */
     public static final double kSpeedNormal = 0.85;
-    /** The fast speed to drive at. */
+    /**
+     * The fast speed to drive at.
+     *
+     * <p>Unitless.
+     */
     public static final double kSpeedFast = 0.95;
+    /**
+     * The max velocity to drive at while path following.
+     *
+     * <p>Unit: Meters / second.
+     */
+    public static final double kMaxTrajectoryVelocity = 3;
+    /**
+     * The max acceleration to drive with while path following.
+     *
+     * <p>Unit: Meters / Second^2.
+     */
+    public static final double kMaxTrajectoryAcceleration = 3;
+    /**
+     * The maximum voltage available to the drive motors while following a path.
+     *
+     * <p>Unit: Volts.
+     */
+    public static final double kMaxVolts = 10;
+
+    // Physical Robot Constants
+
+    /**
+     * The radius of wheels.
+     *
+     * <p>Unit: Meters.
+     */
+    public static final double kWheelRadius = Units.inchesToMeters(6);
+    /**
+     * The trackwidth of the drivetrain.
+     *
+     * <p>Unit: Meters.
+     */
+    public static final double kTrackWidth = 1.189654643399417;
+    /**
+     * The gear ratio between the shaft of the motor, and the encoder and wheels.
+     *
+     * <p>Unitless.
+     */
+    public static final double kGearRatio = 8.45;
+
+    // Encoder Constants
+
+    /**
+     * The cycles per revolution outputted by the encoder.
+     *
+     * <p>Unit: Cycles / Revolution, or Pulses / Revolutions.
+     */
+    private static final int kEncoderCyclesPerRev = 2048;
+    /**
+     * The distance traveled in one revolution, equivalent to the circumference of the wheels.
+     *
+     * <p>Unit: Meters / Revolution.
+     */
+    private static final double kMetersPerRev = Math.PI * kWheelRadius;
+    /**
+     * The distance traveled in one pulse.
+     *
+     * <p>This constant does not depend on the gear ratio because the encoder is placed after the
+     * gearbox.
+     *
+     * <p>Unit: Meters / Pulse, or Meters / Cycle. This will get multiplied by the pulse reading,
+     * and then becomes just meters.
+     */
+    public static final double kEncoderDistancePerPulse = kMetersPerRev / kEncoderCyclesPerRev;
+    /**
+     * The number of encoder samples to average. This is greater than the default, to reduce noise.
+     *
+     * <p>Unit: Samples.
+     */
+    public static final int kEncoderSamplesToAverage = 5;
+
+    /** Feedforward Constants */
+    public static final class Feedforward {
+      /**
+       * The voltage required to overcome the motor's static friction.
+       *
+       * <p>Unit: Volts.
+       */
+      public static final double kS = 0.933;
+      /**
+       * The voltage required to cruise at a certain velocity. This is a function of the velocity
+       * because the friction that has to be overcome increases as the robot speeds up.
+       *
+       * <p>Unit: Volts * (Seconds / Meter).
+       */
+      public static final double kV = 2.47;
+      /**
+       * The voltage required to induce a certain acceleration. This is a function of the
+       * acceleration because, well, we need more volts to make the motor move faster ;)
+       *
+       * <p>Unit: Volts * (Seconds^2 / Meter).
+       */
+      public static final double kA = 0.548;
+      /**
+       * The voltage required to cruise at a certain angular velocity. This is a function of the
+       * velocity because the friction that has to be overcome increases as the robot speeds up.
+       *
+       * <p>TODO: Determine this.
+       *
+       * <p>Unit: Volts * (Seconds / Radians).
+       */
+      public static final double kVAngular = 1.5;
+      /**
+       * The voltage required to induce a certain angular acceleration. This is a function of the
+       * acceleration because, well, we need more volts to make the motor move faster ;)
+       *
+       * <p>TODO: Determine this.
+       *
+       * <p>Unit: Volts * (Seconds^2 / Radians).
+       */
+      public static final double kAAngular = 0.3;
+    }
+
+    /** Feedback Constants */
+    public static final class Feedback {
+      /**
+       * The proportional term for the drive velocity PID controller.
+       *
+       * <p>Unit: Meters / Second.
+       */
+      public static final double kP = 2.55;
+      /**
+       * The B term for the Ramsete controller.
+       *
+       * <p>Unit: Meters.
+       */
+      public static final double kRamseteB = 2;
+      /**
+       * The ζ term for the Ramsete controller.
+       *
+       * <p>Unit: Seconds.
+       */
+      public static final double kRamseteZeta = 0.7;
+    }
   }
 
   /** Constants for the intake subsystem. */
@@ -88,7 +241,7 @@ public final class Constants {
     public static final double kSpeedBelt = 1.0;
   }
 
-  /** Constants for the Shooter subsystem. */
+  /** Constants for the shooter subsystem. */
   public static final class ShooterConstants {
     /** The slow speed to shoot balls at. */
     public static final double kSpeedSlow = 0.4;

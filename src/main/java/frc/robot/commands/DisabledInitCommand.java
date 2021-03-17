@@ -16,12 +16,14 @@ public class DisabledInitCommand extends InstantCommand {
 
   private final DrivetrainSubsystem m_drivetrainSubsystem;
 
-  /** Initializes this command. */
+  /** Initializes the command. */
   public DisabledInitCommand(DrivetrainSubsystem drivetrainSubsystem) {
     m_drivetrainSubsystem = drivetrainSubsystem;
+
+    addRequirements(drivetrainSubsystem);
   }
 
-  /** This method is run when the command is executed. */
+  /** This method is run periodically while the command is scheduled. */
   @Override
   public void execute() {
     // Set the neutral mode of the drive motors to coast.

@@ -18,18 +18,22 @@ public class TeleopInitCommand extends InstantCommand {
   private final DrivetrainSubsystem m_drivetrainSubsystem;
   private final ShooterSubsystem m_shooterSubsystem;
 
-  /** Initializes this command. */
+  /** Initializes the command. */
   public TeleopInitCommand(
       DrivetrainSubsystem drivetrainSubsystem, ShooterSubsystem shooterSubsystem) {
     m_drivetrainSubsystem = drivetrainSubsystem;
     m_shooterSubsystem = shooterSubsystem;
+
+    addRequirements(drivetrainSubsystem, shooterSubsystem);
   }
 
-  /** This method is run when the command is executed. */
+  /** This method is run periodically while the command is scheduled. */
   @Override
   public void execute() {
     // Set the neutral mode of the drive motors to break, for more responsiveness.
-    m_drivetrainSubsystem.setNeutralMode(NeutralMode.Brake);
+    // m_drivetrainSubsystem.setNeutralMode(NeutralMode.Brake);
+    // We don't want to damage the floor of the new gym, so coast in neutral.
+    m_drivetrainSubsystem.setNeutralMode(NeutralMode.Coast);
 
     // Reset the double solenoid.
     m_shooterSubsystem.resetSolenoid();
