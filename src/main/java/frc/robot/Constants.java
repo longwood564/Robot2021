@@ -13,6 +13,13 @@ import edu.wpi.first.wpilibj.util.Units;
 /** Constants for ports on the robot and driver station, and for each subsystem. */
 public final class Constants {
   /**
+   * How often the robot loop is ran.
+   *
+   * <p>Unit: Seconds.
+   */
+  public static final double kRobotLoopPeriod = 0.02;
+
+  /**
    * Constants for ports that are on the roboRIO.
    *
    * <p>The SPI port to which the Gyroscope is connected is not included here because that constant
