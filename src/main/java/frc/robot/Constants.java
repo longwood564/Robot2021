@@ -201,20 +201,16 @@ public final class Constants {
        * The voltage required to cruise at a certain angular velocity. This is a function of the
        * velocity because the friction that has to be overcome increases as the robot speeds up.
        *
-       * <p>TODO: Determine this.
-       *
        * <p>Unit: Volts * (Seconds / Radians).
        */
-      public static final double kVAngular = 1.5;
+      public static final double kVAngular = 2.39;
       /**
        * The voltage required to induce a certain angular acceleration. This is a function of the
        * acceleration because, well, we need more volts to make the motor move faster ;)
        *
-       * <p>TODO: Determine this.
-       *
        * <p>Unit: Volts * (Seconds^2 / Radians).
        */
-      public static final double kAAngular = 0.3;
+      public static final double kAAngular = 0.672;
     }
 
     /** Feedback Constants */
