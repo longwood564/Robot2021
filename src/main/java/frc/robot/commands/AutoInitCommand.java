@@ -33,6 +33,9 @@ public class AutoInitCommand extends InstantCommand {
     // Set the neutral mode of the drive motors to break, to prevent coasting in autonomous.
     m_drivetrainSubsystem.setNeutralMode(NeutralMode.Brake);
 
+    // Don't scale the drive inputs.
+    m_drivetrainSubsystem.setDriveSpeed(1.0);
+
     // Reset the double solenoid.
     m_shooterSubsystem.resetSolenoid();
   }

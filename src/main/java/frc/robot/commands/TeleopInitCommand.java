@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -34,6 +35,9 @@ public class TeleopInitCommand extends InstantCommand {
     // m_drivetrainSubsystem.setNeutralMode(NeutralMode.Brake);
     // We don't want to damage the floor of the new gym, so coast in neutral.
     m_drivetrainSubsystem.setNeutralMode(NeutralMode.Coast);
+
+    // Set the default drive speed.
+    m_drivetrainSubsystem.setDriveSpeed(DrivetrainConstants.kSpeedNormal);
 
     // Reset the double solenoid.
     m_shooterSubsystem.resetSolenoid();
