@@ -8,6 +8,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 
 /** Constants for ports on the robot and driver station, and for each subsystem. */
@@ -69,6 +72,12 @@ public final class Constants {
     public static final int kPortControllerDrive = 0;
     /** The port of the manipulator controller. */
     public static final int kPortControllerManip = 1;
+  }
+
+  /** Constants for field, and game pieces. */
+  public static final class FieldConstants {
+    /** The diameter of the power cells. */
+    public static final double kPowerCellDiameter = Units.inchesToMeters(7);
   }
 
   /**
@@ -303,5 +312,38 @@ public final class Constants {
     public static final double kSpeedSlow = 0.4;
     /** The normal speed to shoot balls at. */
     public static final double kSpeedNormal = 1.0;
+  }
+
+  /** Constants for the vision subsystem. */
+  public static final class VisionConstants {
+    /** The nickname of the Raspberry Pi Camera in PhotonVision. */
+    public static final String kCamName = "Webcam";
+    /** The diagonal field of view of the Picam, in degrees. TODO: Verify */
+    public static final double kCamDiagonalFOV = 67;
+    /** The pitch of the camera when the shooter is lowered, in radians. */
+    public static final double kCamPitchLow = Units.degreesToRadians(-10);
+    /** The pitch of the camera when the shooter is raised, in radians. */
+    public static final double kCamPitchHigh = Units.degreesToRadians(3);
+    /** Translation from the camera to the center of the robot. */
+    public static final Transform2d kTransCamToRobot =
+        new Transform2d(new Translation2d(0.4, 0.0), new Rotation2d());
+    /** The height of the camera when the shooter is lowered, in meters. */
+    public static final double kCamHeightOffGroundLow = 0.77;
+    /** The height of the camera when the shooter is raised, in meters. */
+    public static final double kCamHeightOffGroundHigh = 0.91;
+    /** TODO: Tune */
+    public static final double kCamMaxLEDRange = 20;
+    /** Width of the camera image, in pixels. */
+    public static final int kCamResolutionWidth = 960;
+    /** Height of the camera image, in pixels. */
+    public static final int kCamResolutionHeight = 720;
+    /** Minimum required area for the target. TODO: Tune */
+    public static final int kMinTargetArea = 0;
+  }
+
+  public static final class GalacticSearchConstants {
+    public static final double kStopDistance = 1.3;
+    // public static final double kAdditionalDistance = 0.2;
+    public static final double kAdditionalDistance = 0;
   }
 }
