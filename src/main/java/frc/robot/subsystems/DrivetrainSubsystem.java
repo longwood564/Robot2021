@@ -266,11 +266,38 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   }
 
   /**
+   * Returns the distance traveled by the robot.
+   *
+   * @return The average distance traveled between the two drive encoders.
+   */
+  public double getDistance() {
+    return (m_encoderLeft.getDistance() + m_encoderRight.getDistance()) / 2.0;
+  }
+
+  /**
    * Returns the heading of the robot.
    *
-   * @return The robot's heading in degrees, from -180 to 180
+   * @return The robot's heading in degrees, from -π to π
    */
   public double getHeading() {
-    return -Math.IEEEremainder(m_gyro.getAngle(), 360);
+    return m_gyro.getRotation2d().getRadians();
+  }
+
+  /**
+   * Returns the speed of the robot.
+   *
+   * @return The average rate of change between the two drive encoders.
+   */
+  public double getSpeed() {
+    return (m_encoderLeft.getRate() + m_encoderRight.getRate()) / 2.0;
+  }
+
+  /**
+   * Returns the rotational speed of the robot.
+   *
+   * @return The rate of change in the gyroscope.
+   */
+  public double getTurnRate() {
+    return Units.degreesToRadians(m_gyro.getRate());
   }
 }
