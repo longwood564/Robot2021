@@ -102,13 +102,25 @@ public final class Constants {
      *
      * <p>Unit: Meters / second.
      */
-    public static final double kMaxTrajectoryVelocity = 3;
+    public static final double kMaxTrajectoryVelocity = 1.5;
     /**
      * The max acceleration to drive with while path following.
      *
      * <p>Unit: Meters / Second^2.
      */
-    public static final double kMaxTrajectoryAcceleration = 3;
+    public static final double kMaxTrajectoryAcceleration = 0.5;
+    /**
+     * The max velocity to turn at when turning on the spot.
+     *
+     * <p>Unit: Radians / second.
+     */
+    public static final double kMaxTurnVelocity = Units.degreesToRadians(100);
+    /**
+     * The max acceleration to turn with when turning on the spot.
+     *
+     * <p>Unit: Degrees / Second^2.
+     */
+    public static final double kMaxTurnAcceleration = Units.degreesToRadians(90);
     /**
      * The maximum voltage available to the drive motors while following a path.
      *
@@ -208,12 +220,60 @@ public final class Constants {
 
     /** Feedback Constants */
     public static final class Feedback {
-      /**
-       * The proportional term for the drive velocity PID controller.
-       *
-       * <p>Unit: Meters / Second.
-       */
-      public static final double kP = 2.55;
+      /** Feedback on the drivetrain x-axis. */
+      public static final class X {
+        /** Closing on position, but outputting a velocity */
+        public static final class Position {
+          /**
+           * The proportional term for the PID controller.
+           *
+           * <p>Unit: (Meters / Second) * (1 / Meter).
+           */
+          public static final double kP = 2.0;
+          /**
+           * The derivative term for the PID controller.
+           *
+           * <p>Unit: (Meters / Second) * (Seconds / Meter).
+           */
+          public static final double kD = 0.7;
+        }
+        /** Closing on velocity. */
+        public static final class Velocity {
+          /**
+           * The proportional term for the PID controller.
+           *
+           * <p>Unit: (Meters / Second) * (Seconds / Meter).
+           */
+          public static final double kP = 2.55;
+        }
+      }
+      /** Feedback on the drivetrain theta. */
+      public static final class Theta {
+        /** Closing on position. */
+        public static final class Position {
+          /**
+           * The proportional term for the drive turn position PID controller.
+           *
+           * <p>Unit: (Radians / Second) * (1 / Radian).
+           */
+          public static final double kP = 2.2;
+          /**
+           * The derivative term for the drive turn position PID controller.
+           *
+           * <p>Unit: (Radians / Second) * (Seconds / Radian).
+           */
+          public static final double kD = 0.4;
+        }
+        /** Closing on velocity. */
+        public static final class Velocity {
+          /**
+           * The proportional term for the drive turn position PID controller.
+           *
+           * <p>Unit: (Radians / Second) * (Seconds / Radian).
+           */
+          public static final double kP = 2.55;
+        }
+      }
       /**
        * The B term for the Ramsete controller.
        *

@@ -63,9 +63,9 @@ public class DriveTrajectoryCommand extends CommandBase {
   // PID Feedback Controllers (Approaches setpoints)
 
   private final PIDController m_controllerLeft =
-      new PIDController(DrivetrainConstants.Feedback.kP, 0, 0);
+      new PIDController(DrivetrainConstants.Feedback.X.Velocity.kP, 0, 0);
   private final PIDController m_controllerRight =
-      new PIDController(DrivetrainConstants.Feedback.kP, 0, 0);
+      new PIDController(DrivetrainConstants.Feedback.X.Velocity.kP, 0, 0);
 
   // Voltage Constraint
   private final DifferentialDriveVoltageConstraint m_voltageConstraint =
