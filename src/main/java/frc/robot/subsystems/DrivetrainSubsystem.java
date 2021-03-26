@@ -19,7 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.VecBuilder;
 
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -96,6 +98,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
       new DifferentialDrive(m_motorFrontLeft, m_motorFrontRight);
 
   // Simulated Drive Class
+  private static final boolean m_simulateError = false;
   private DifferentialDrivetrainSim m_differentialDriveSim =
       new DifferentialDrivetrainSim(
           LinearSystemId.identifyDrivetrainSystem(
@@ -107,7 +110,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
           DrivetrainConstants.kGearRatio,
           DrivetrainConstants.kTrackWidth,
           DrivetrainConstants.kWheelRadius,
-          null);
+          m_simulateError ? VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005) : null);
 
   // Odometry
   private DifferentialDriveOdometry m_odometry =
