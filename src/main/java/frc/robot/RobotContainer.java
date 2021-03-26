@@ -8,12 +8,7 @@
 
 package frc.robot;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
@@ -28,7 +23,8 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AutoInitCommand;
 import frc.robot.commands.DisabledInitCommand;
-import frc.robot.commands.DriveTrajectoryCommand;
+import frc.robot.commands.GalacticSearchCommand;
+import frc.robot.commands.ResetOdometryCommand;
 import frc.robot.commands.TeleopInitCommand;
 import frc.robot.driverinput.F310Controller;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -58,19 +54,7 @@ public class RobotContainer {
   // Resets the robot position and rotation. Note that running this will interrupt any interruptible
   // commands that are using the drivetrain subsystem.
   @Log
-  private final Command m_resetOdometryCommand =
-      new InstantCommand(m_drivetrainSubsystem::resetOdometry, m_drivetrainSubsystem)
-          .withName("Reset Odometry");
-  // Follows the example trajectory from the FRC Docs Trajectory Tutorial.
-  private final DriveTrajectoryCommand m_exampleAutoCommand =
-      new DriveTrajectoryCommand(
-          m_drivetrainSubsystem,
-          // Start at the origin facing the +X direction
-          new Pose2d(0, 0, new Rotation2d(0)),
-          // Pass through these two interior waypoints, making an 's' curve path
-          List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-          // End 3 meters straight ahead of where we started, facing forward
-          new Pose2d(3, 0, new Rotation2d(0)));
+  private final Command m_resetOdometryCommand = new ResetOdometryCommand(m_drivetrainSubsystem);
 
   // Driver Input
 
@@ -92,7 +76,87 @@ public class RobotContainer {
   // Initializes the default commands and command bindings.
   public RobotContainer() {
     // Configure the automous chooser.
-    m_autoChooser.setDefaultOption("Example Autonomous Trajectory", m_exampleAutoCommand);
+
+    // Add the reset odometry command here, in case the Shuffleboard button breaks (hint: in
+    // simulation, after it fails to quit peacefully, it will break).
+    m_autoChooser.addOption("Reset Odometry", m_resetOdometryCommand);
+
+    // DriveCommand tests:
+
+    // m_autoChooser.addOption(
+    //     "Drive Straight",
+    //     new DriveCommand(m_drivetrainSubsystem, Mode.Constant, 1, Mode.Constant, 0));
+    // m_autoChooser.addOption(
+    //     "Turn",
+    //     new DriveCommand(
+    //         m_drivetrainSubsystem, Mode.Constant, 0, Mode.Constant,
+    // Units.degreesToRadians(180)));
+    // m_autoChooser.addOption(
+    //     "Drive from Origin to End Zone (Not profiled)",
+    //     new DriveCommand(
+    //         m_drivetrainSubsystem, Mode.Control, Units.inchesToMeters(345), Mode.Constant, 0));
+    // m_autoChooser.addOption(
+    //     "Drive from Origin to End Zone (Profiled)",
+    //     new DriveCommand(
+    //         m_drivetrainSubsystem,
+    //         Mode.ProfiledControl,
+    //         Units.inchesToMeters(345),
+    //         Mode.Constant,
+    //         0));
+    // m_autoChooser.addOption(
+    //     "Turn Around (Not profiled)",
+    //     new DriveCommand(
+    //         m_drivetrainSubsystem,
+    //         Mode.Constant,
+    //         0,
+    //         Mode.Control,
+    //         Units.degreesToRadians(180),
+    //         false));
+    // m_autoChooser.addOption(
+    //     "Turn Around (Profiled)",
+    //     new DriveCommand(
+    //         m_drivetrainSubsystem,
+    //         Mode.Constant,
+    //         0,
+    //         Mode.ProfiledControl,
+    //         Units.degreesToRadians(180),
+    //         true));
+
+    // DriveTrajectoryCommand Tests:
+
+    // m_autoChooser.addOption(
+    //     "Example Autonomous Trajectory",
+    //     new DriveTrajectoryCommand(
+    //         m_drivetrainSubsystem,
+    //         // Start at the origin facing the +X direction
+    //         new Pose2d(0, 0, new Rotation2d(0)),
+    //         // Pass through these two interior waypoints, making an 's' curve path
+    //         List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+    //         // End 3 meters straight ahead of where we started, facing forward
+    //         new Pose2d(3, 0, new Rotation2d(0))));
+    // m_autoChooser.addOption(
+    //     "Go to End",
+    //     new DriveTrajectoryCommand(
+    //         m_drivetrainSubsystem,
+    //         new ArrayList<Translation2d>(),
+    //         new Pose2d(
+    //             new Translation2d(Units.inchesToMeters(330), Units.inchesToMeters(90)),
+    //             new Rotation2d())));
+
+    // DriveToTargetCommand Tests:
+
+    // m_autoChooser.addOption(
+    //     "Drive to Power Cell",
+    //     new DriveToTargetCommand(m_drivetrainSubsystem, m_visionSubsystem, 1.2));
+
+    // Galactic Search:
+
+    m_autoChooser.setDefaultOption(
+        "Galactic Search",
+        new GalacticSearchCommand(m_drivetrainSubsystem, m_intakeSubsystem, m_visionSubsystem));
+    // m_autoChooser.addOption(
+    //     "Drive Straight Backwards",
+    //     new DriveCommand(m_drivetrainSubsystem, Mode.Constant, -0.21, Mode.Constant, 0));
 
     // Configure default commands.
 
