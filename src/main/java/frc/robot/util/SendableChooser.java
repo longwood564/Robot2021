@@ -21,7 +21,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 import edu.wpi.first.networktables.EntryListenerFlags;
-import edu.wpi.first.networktables.EntryNotification;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
@@ -57,24 +56,12 @@ public class SendableChooser<V> implements Sendable, AutoCloseable {
   private final int m_instance;
   private static final AtomicInteger s_instances = new AtomicInteger();
 
-  /** The listener for the active option entry. */
-  private Consumer<EntryNotification> m_listener;
-
   private final List<Consumer<V>> m_listeners = new ArrayList<>();
 
   /** Instantiates a {@link SendableChooser}. */
   public SendableChooser() {
     m_instance = s_instances.getAndIncrement();
     SendableRegistry.add(this, "SendableChooser", m_instance);
-  }
-
-  /** Instantiates a {@link SendableChooser} with a listener for handling updates. */
-  public SendableChooser(Consumer<EntryNotification> listener) {
-    this();
-    m_listener =
-        (event) -> {
-          System.out.println(event.value);
-        };
   }
 
   @Override
