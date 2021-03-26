@@ -81,7 +81,13 @@ public class DriveTrajectoryCommand extends CommandBase {
           .addConstraint(m_voltageConstraint);
 
   // Trajectory (Parameterizes the spline by time)
-  private final Trajectory m_trajectory;
+  private Trajectory m_trajectory;
+
+  // Interior trajectory waypoints, if we need to save them until the command is ran.
+  private List<Translation2d> m_interiorWaypoints;
+
+  // Ending pose, if we need to save it until the command is ran.
+  Pose2d m_end;
 
   // Timer
   private final Timer m_timer = new Timer();
@@ -91,6 +97,27 @@ public class DriveTrajectoryCommand extends CommandBase {
 
   // Time as of last execute().
   private double m_prevTime;
+
+  /**
+   * Constructs a command that, when executed, will follow the provided trajectory. PID control and
+   * feedforward are handled internally, and outputs are scaled -12 to 12 representing units of
+   * volts. The robot's current location is used as the starting pose.
+   *
+   * <p>Note: The controller will *not* set the outputVolts to zero upon completion of the path -
+   * this is left to the user, since it is not appropriate for paths with nonstationary endstates.
+   *
+   * @param drivetrainSubsystem The drivetrain subsystem.
+   * @param interiorWaypoints The interior waypoints.
+   * @param end The ending pose.
+   */
+  public DriveTrajectoryCommand(
+      DrivetrainSubsystem drivetrainSubsystem, List<Translation2d> interiorWaypoints, Pose2d end) {
+    m_drivetrainSubsystem = drivetrainSubsystem;
+    m_interiorWaypoints = interiorWaypoints;
+    m_end = end;
+
+    addRequirements(drivetrainSubsystem);
+  }
 
   /**
    * Constructs a command that, when executed, will follow the provided trajectory. PID control and
@@ -120,6 +147,13 @@ public class DriveTrajectoryCommand extends CommandBase {
   /** This method is run when the command is initially scheduled. */
   @Override
   public void initialize() {
+    // If we are using the robot's current position as a starting point, generate the trajectory
+    // now.
+    if (m_trajectory == null)
+      m_trajectory =
+          TrajectoryGenerator.generateTrajectory(
+              m_drivetrainSubsystem.getPose(), m_interiorWaypoints, m_end, m_trajectoryConfig);
+
     m_prevTime = -1;
     State initialState = m_trajectory.sample(0);
     m_prevSpeeds =
