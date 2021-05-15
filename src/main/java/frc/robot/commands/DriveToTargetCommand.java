@@ -63,7 +63,7 @@ public class DriveToTargetCommand extends DriveCommand {
       m_xMode = Mode.Constant;
       m_xSetpoint = 0;
       m_tMode = Mode.Constant;
-      m_tSetpoint = 0.05;
+      m_tSetpoint = 0.3;
       m_prevHasTarget = false;
     }
     super.execute();
