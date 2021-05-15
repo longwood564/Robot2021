@@ -192,7 +192,7 @@ public class DriveTrajectoryCommand extends CommandBase {
     double rightSpeedSetpoint = targetWheelSpeeds.rightMetersPerSecond;
 
     // Calculate the feedforward for the given velocity setpoint. For the acceleration, calculate
-    // the secant from the previous speed to this speed (Δy/Δx=Δv/Δt).
+    // the secant from the previous speed to this speed (delta y/delta x=delta v/delta t).
     double leftFeedforward =
         m_feedforward.calculate(
             leftSpeedSetpoint, (leftSpeedSetpoint - m_prevSpeeds.leftMetersPerSecond) / dt);
