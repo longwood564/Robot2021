@@ -342,7 +342,7 @@ public final class Constants {
   }
 
   public static final class GalacticSearchConstants {
-    public static final double kStopDistance = 1.3;
+    public static final double kStopDistance = 2;
     // public static final double kAdditionalDistance = 0.2;
     public static final double kAdditionalDistance = 0;
   }
