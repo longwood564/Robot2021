@@ -284,13 +284,13 @@ public final class Constants {
         }
       }
       /**
-       * The B term for the Ramsete controller.
+       * The beta term for the Ramsete controller.
        *
        * <p>Unit: Meters.
        */
       public static final double kRamseteB = 2;
       /**
-       * The ζ term for the Ramsete controller.
+       * The zeta term for the Ramsete controller.
        *
        * <p>Unit: Seconds.
        */
