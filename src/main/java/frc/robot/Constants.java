@@ -317,9 +317,9 @@ public final class Constants {
   /** Constants for the vision subsystem. */
   public static final class VisionConstants {
     /** The nickname of the Raspberry Pi Camera in PhotonVision. */
-    public static final String kCamName = "Webcam";
+    public static final String kCamName = "longwood564";
     /** The diagonal field of view of the Picam, in degrees. TODO: Verify */
-    public static final double kCamDiagonalFOV = 67;
+    public static final double kCamDiagonalFOV = 25.35;
     /** The pitch of the camera when the shooter is lowered, in radians. */
     public static final double kCamPitchLow = Units.degreesToRadians(-10);
     /** The pitch of the camera when the shooter is raised, in radians. */
