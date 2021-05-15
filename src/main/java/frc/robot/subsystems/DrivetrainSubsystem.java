@@ -280,7 +280,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements Loggable {
   /**
    * Returns the heading of the robot.
    *
-   * @return The robot's heading in degrees, from -π to π
+   * @return The robot's heading in degrees, from -pi to pi.
    */
   public double getHeading() {
     return m_gyro.getRotation2d().getRadians();
