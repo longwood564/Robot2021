@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.Constants.GalacticSearchConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -28,6 +29,9 @@ public class GalacticSearchCommand extends SequentialCommandGroup {
       DrivetrainSubsystem drivetrainSubsystem,
       IntakeSubsystem intakeSubsystem,
       VisionSubsystem visionSubsystem) {
+    addCommands( // Start the intake mechanism.
+        new InstantCommand(() -> intakeSubsystem.startIntake(IntakeConstants.kSpeedIntake)),
+        new InstantCommand(() -> intakeSubsystem.startBelt(IntakeConstants.kSpeedBelt)));
     for (int i = 1; i < 4; ++i)
       addCommands(new SearchForGalactic(drivetrainSubsystem, intakeSubsystem, visionSubsystem, i));
     addCommands(
@@ -38,6 +42,10 @@ public class GalacticSearchCommand extends SequentialCommandGroup {
             new Pose2d(
                 new Translation2d(Units.inchesToMeters(330), Units.inchesToMeters(90)),
                 new Rotation2d())));
+
+    addCommands( // Stop the intake mechanism.
+        new InstantCommand(intakeSubsystem::stopIntake, intakeSubsystem),
+        new InstantCommand(intakeSubsystem::stopBelt, intakeSubsystem));
   }
 
   private class SearchForGalactic extends SequentialCommandGroup {
@@ -49,11 +57,12 @@ public class GalacticSearchCommand extends SequentialCommandGroup {
         VisionSubsystem visionSubsystem,
         int n) {
       addCommands(
+          new PrintCommand("Looking for target..."),
           // Drive to the power cell.
           new DriveToTargetCommand(
               drivetrainSubsystem, visionSubsystem, GalacticSearchConstants.kStopDistance),
           // Print the informational message.
-          new PrintCommand("At target " + n + "!"),
+          new PrintCommand("At target " + n + "! Backing up..."),
           // Turn the robot around.
           new DriveCommand(
               drivetrainSubsystem,
@@ -62,20 +71,25 @@ public class GalacticSearchCommand extends SequentialCommandGroup {
               Mode.Control,
               Units.degreesToRadians(180),
               true),
-          // Start the intake mechanism.
-          new InstantCommand(() -> intakeSubsystem.startIntake(IntakeConstants.kSpeedIntake)),
-          new InstantCommand(() -> intakeSubsystem.startBelt(IntakeConstants.kSpeedBelt)),
+          new PrintCommand("Backing up..."),
           // Back up to the power cell.
           new DriveCommand(
               drivetrainSubsystem,
               Mode.Control,
               -(GalacticSearchConstants.kStopDistance
                   + GalacticSearchConstants.kAdditionalDistance),
-              Mode.Constant,
-              0),
-          // Stop the intake mechanism.
-          new InstantCommand(intakeSubsystem::stopIntake, intakeSubsystem),
-          new InstantCommand(intakeSubsystem::stopBelt, intakeSubsystem));
+              Mode.Control,
+              0,
+              true),
+          new DriveCommand(
+              drivetrainSubsystem,
+              Mode.Control,
+              (GalacticSearchConstants.kStopDistance + GalacticSearchConstants.kAdditionalDistance),
+              Mode.Control,
+              0,
+              true),
+          new PrintCommand("Waiting....."),
+          new WaitCommand(2));
     }
   }
 }
