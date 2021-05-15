@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -106,8 +105,8 @@ public class VisionSubsystem extends SubsystemBase implements Loggable {
 
     // If we're runnning on the real robot, enable the camera.
     if (RobotBase.isReal()) {
-      m_camera = CameraServer.getInstance().startAutomaticCapture();
-      m_camera.setResolution(960, 720);
+      // m_camera = CameraServer.getInstance().startAutomaticCapture();
+      // m_camera.setResolution(960, 720);
     } else {
       initializeSimulatedSystems();
 
