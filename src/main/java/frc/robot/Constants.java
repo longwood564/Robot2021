@@ -238,13 +238,13 @@ public final class Constants {
            *
            * <p>Unit: (Meters / Second) * (1 / Meter).
            */
-          public static final double kP = 2.0;
+          public static final double kP = 0.5;
           /**
            * The derivative term for the PID controller.
            *
            * <p>Unit: (Meters / Second) * (Seconds / Meter).
            */
-          public static final double kD = 0.7;
+          public static final double kD = 0;
         }
         /** Closing on velocity. */
         public static final class Velocity {
@@ -265,13 +265,13 @@ public final class Constants {
            *
            * <p>Unit: (Radians / Second) * (1 / Radian).
            */
-          public static final double kP = 2.2;
+          public static final double kP = 0.5;
           /**
            * The derivative term for the drive turn position PID controller.
            *
            * <p>Unit: (Radians / Second) * (Seconds / Radian).
            */
-          public static final double kD = 0.4;
+          public static final double kD = 0;
         }
         /** Closing on velocity. */
         public static final class Velocity {
