@@ -224,7 +224,7 @@ public class DriveCommand extends CommandBase {
 
     m_controllerX.setTolerance(Units.inchesToMeters(1), Units.inchesToMeters(1));
     m_controllerTheta.enableContinuousInput(-Math.PI, Math.PI);
-    m_controllerTheta.setTolerance(Units.degreesToRadians(0.25));
+    m_controllerTheta.setTolerance(Units.degreesToRadians(1));
     // Set the controller to be continuous (because it is an angle controller).
     m_controllerThetaProfiled.enableContinuousInput(-Math.PI, Math.PI);
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
